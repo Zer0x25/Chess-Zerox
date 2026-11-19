@@ -8,7 +8,7 @@
 
 Terminado y verificado:
 
-- Repo público en `https://github.com/Zer0x25/Chess-Zerox` (HEAD `31c45ed9e`).
+- Repo público en `https://github.com/Zer0x25/Chess-Zerox` (HEAD `03d9cb524`).
 - Importación desde Chess.com y Lichess (por usuario, sin login) y desde PGN, en español.
 - Revisión local con Stockfish 19: informe con precisión/ACPL, momentos clave y etiquetas
   propias («Jugada estrella», «Ocasión perdida», «Error grave»).
