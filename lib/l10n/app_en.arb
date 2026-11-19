@@ -98,6 +98,14 @@
   "mobileImportDisclaimer": "Games are fetched from the public Lichess and Chess.com APIs. This app is not affiliated with either platform.",
   "mobileImportCount": "Games to import",
   "mobileImportUpdate": "Update",
+  "mobileImportNewGame": "{param} new game",
+  "@mobileImportNewGame": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
   "mobileImportNewGames": "{param} new games",
   "@mobileImportNewGames": {
     "placeholders": {

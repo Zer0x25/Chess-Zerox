@@ -48,6 +48,7 @@
   "mobileImportRetry": "Reintentar",
   "mobileImportCount": "Partidas a importar",
   "mobileImportUpdate": "Actualizar",
+  "mobileImportNewGame": "{param} partida nueva",
   "mobileImportNewGames": "{param} partidas nuevas",
   "mobileImportNoNewGames": "No hay partidas nuevas",
   "mobileImportData": "Datos de importación",

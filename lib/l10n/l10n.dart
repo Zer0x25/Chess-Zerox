@@ -562,6 +562,12 @@ abstract class AppLocalizations {
   /// **'Update'**
   String get mobileImportUpdate;
 
+  /// No description provided for @mobileImportNewGame.
+  ///
+  /// In en, this message translates to:
+  /// **'{param} new game'**
+  String mobileImportNewGame(String param);
+
   /// No description provided for @mobileImportNewGames.
   ///
   /// In en, this message translates to:

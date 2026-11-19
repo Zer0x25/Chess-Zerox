@@ -49,6 +49,7 @@
   <string name="importRetry" comment="Button retrying a failed game import search. Should be short.">Reintentar</string>
   <string name="importCount" comment="Label of the selector that chooses how many games to import at once.">Partidas a importar</string>
   <string name="importUpdate" comment="Button that refreshes the saved games of a username, importing only newer ones.">Actualizar</string>
+  <string name="importNewGame" comment="Feedback after importing a single game. %s is the number 1.">%s partida nueva</string>
   <string name="importNewGames" comment="Feedback after importing games. %s is the number of newly saved games.">%s partidas nuevas</string>
   <string name="importNoNewGames" comment="Feedback after an update finds no newer games than the ones already saved.">No hay partidas nuevas</string>
   <string name="importData" comment="Settings entry for managing locally saved import data.">Datos de importación</string>

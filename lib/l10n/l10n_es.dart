@@ -202,6 +202,11 @@ class AppLocalizationsEs extends AppLocalizations {
   String get mobileImportUpdate => 'Actualizar';
 
   @override
+  String mobileImportNewGame(String param) {
+    return '$param partida nueva';
+  }
+
+  @override
   String mobileImportNewGames(String param) {
     return '$param partidas nuevas';
   }

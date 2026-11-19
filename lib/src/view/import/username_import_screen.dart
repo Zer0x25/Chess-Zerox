@@ -67,18 +67,18 @@ class _UsernameImportScreenState() extends ConsumerState<UsernameImportScreen> {
         username: username,
         games: newer,
       );
+      ref.invalidate(importedSourcesProvider);
       final saved = await store.listGames(source: widget.source, username: username, limit: _limit);
       if (!mounted) return;
       setState(() {
         _username = username;
         _future = Future.value(saved);
       });
-      showSnackBar(
-        context,
-        newCount == 0
-            ? context.l10n.mobileImportNoNewGames
-            : context.l10n.mobileImportNewGames('$newCount'),
-      );
+      showSnackBar(context, switch (newCount) {
+        0 => context.l10n.mobileImportNoNewGames,
+        1 => context.l10n.mobileImportNewGame('1'),
+        _ => context.l10n.mobileImportNewGames('$newCount'),
+      });
     } catch (error) {
       if (!mounted) return;
       // The future may fail before the first build subscribes to it through the future builder.

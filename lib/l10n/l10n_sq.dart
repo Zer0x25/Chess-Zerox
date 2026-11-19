@@ -202,6 +202,11 @@ class AppLocalizationsSq extends AppLocalizations {
   String get mobileImportUpdate => 'Update';
 
   @override
+  String mobileImportNewGame(String param) {
+    return '$param new game';
+  }
+
+  @override
   String mobileImportNewGames(String param) {
     return '$param new games';
   }
