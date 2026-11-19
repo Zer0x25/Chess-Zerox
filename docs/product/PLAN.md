@@ -88,7 +88,7 @@ Inicio
 
 ### 5.2 Revisión
 
-- Motor local Stockfish 18 NNUE.
+- Motor local Stockfish 19 NNUE.
 - Tres modos:
   - **Rápida**: profundidad 14, MultiPV 1 y segunda pasada en errores. Para partidas de 10+0.
   - **Equilibrada**: profundidad 16-18, MultiPV 2 en posiciones críticas. Recomendado.

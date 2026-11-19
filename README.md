@@ -16,7 +16,7 @@ modificar su motor de ajedrez ni su tablero. Sobre esa base ya funciona:
 - Cliente de la **Published-Data API de Chess.com**: peticiones en serie, `User-Agent` propio,
   caché en memoria de 12 horas y revalidación con `ETag`/`Last-Modified`.
 - Apertura de cualquier partida importada en el **tablero de análisis** existente, con evaluación
-  local de Stockfish 18 NNUE y navegación por la partida.
+  local de Stockfish 19 NNUE y navegación por la partida.
 - Tests de unidad del cliente de Chess.com y tests de widget del flujo de importación, sin llamadas
   reales a las APIs.
 
@@ -41,7 +41,7 @@ flutter test test/model/import test/view/import
 
 ## La idea en una frase
 
-Importa tus partidas de Lichess y Chess.com (o un PGN), analízalas en el teléfono con Stockfish 18 NNUE y recibe un informe claro: precisión, errores, mejores jugadas y ejercicios para no repetir los mismos fallos.
+Importa tus partidas de Lichess y Chess.com (o un PGN), analízalas en el teléfono con Stockfish 19 NNUE y recibe un informe claro: precisión, errores, mejores jugadas y ejercicios para no repetir los mismos fallos.
 
 No queremos competir con Lichess ni con Chess.com. Queremos ser la capa de análisis y entrenamiento que hoy está detrás de un muro de pago o dispersa entre plataformas.
 
@@ -50,7 +50,7 @@ No queremos competir con Lichess ni con Chess.com. Queremos ser la capa de anál
 La app [lichess-org/mobile](https://github.com/lichess-org/mobile) ya trae, en Flutter y GPLv3:
 
 - Tablero, editor de posiciones y análisis interactivo.
-- Stockfish 18 con redes NNUE, ejecutándose en el dispositivo.
+- Stockfish 19 con redes NNUE, ejecutándose en el dispositivo.
 - Explorador de aperturas, tabla de finales y análisis de servidor de Lichess.
 - Importación de PGN, modo "aprende de tus errores", temas, i18n y accesibilidad.
 - Cliente de la API de Lichess con OAuth PKCE, caché y manejo de límites.
@@ -93,7 +93,7 @@ Fuera del MVP: jugar online, torneos, social, detección de trampas, análisis e
 ## Stack
 
 - **Flutter 3.50 / Dart 3.14** (fork de Lichess Mobile).
-- **Stockfish 18 NNUE** mediante `multistockfish`, el motor que ya usa la app.
+- **Stockfish 19 NNUE** mediante `multistockfish`, el motor que ya usa la app.
 - **dartchess** para reglas, PGN y variantes.
 - **chessground** para el tablero.
 - **Riverpod** para estado.

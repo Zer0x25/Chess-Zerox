@@ -17,7 +17,7 @@ La app de Lichess ya contiene:
 
 - `dartchess`: reglas, PGN, variantes, posiciones.
 - `chessground`: tablero, flechas, resaltados, temas.
-- `multistockfish`: Stockfish 18 + NNUE en Android/iOS.
+- `multistockfish`: Stockfish 19 + NNUE en Android/iOS.
 - Análisis interactivo, evaluación local y de servidor, explorador, tabla de finales.
 - Importación de PGN y "aprende de tus errores".
 - OAuth PKCE, cliente HTTP con reintentos y caché, i18n, notificaciones, deep links.
@@ -34,7 +34,7 @@ flowchart LR
   IMP --> N[Partida normalizada]
   N --> DB[(SQLite)]
   N --> REV[Review Engine]
-  REV --> SF[Stockfish 18 NNUE]
+  REV --> SF[Stockfish 19 NNUE]
   REV --> REP[GameReview]
   REP --> DB
   REP --> UI[Informe + Tablero + Entrenamiento]
