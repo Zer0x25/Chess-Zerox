@@ -574,6 +574,48 @@ abstract class AppLocalizations {
   /// **'No new games'**
   String get mobileImportNoNewGames;
 
+  /// No description provided for @mobileImportData.
+  ///
+  /// In en, this message translates to:
+  /// **'Import data'**
+  String get mobileImportData;
+
+  /// No description provided for @mobileImportDataSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Saved usernames and games'**
+  String get mobileImportDataSubtitle;
+
+  /// No description provided for @mobileImportClearAll.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete all data'**
+  String get mobileImportClearAll;
+
+  /// No description provided for @mobileImportClearConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete saved data?'**
+  String get mobileImportClearConfirm;
+
+  /// No description provided for @mobileImportClearConfirmBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Usernames and games stored on this device will be deleted.'**
+  String get mobileImportClearConfirmBody;
+
+  /// No description provided for @mobileImportNoData.
+  ///
+  /// In en, this message translates to:
+  /// **'No saved data'**
+  String get mobileImportNoData;
+
+  /// No description provided for @mobileImportGamesCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{param} games'**
+  String mobileImportGamesCount(String param);
+
   /// No description provided for @mobileImportFromLichess.
   ///
   /// In en, this message translates to:

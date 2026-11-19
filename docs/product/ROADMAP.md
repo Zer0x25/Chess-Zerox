@@ -74,7 +74,9 @@ Según `CACHE_Y_MARCA.md`:
       actualizar sin duplicados.
   - Limitación conocida: el cursor evita guardar duplicados, pero las APIs siguen consultando el
     mismo número de partidas; el ahorro de tráfico total queda para el siguiente paso.
-- [ ] **R6. Preferencias de datos** — borrar usuarios/partidas guardadas desde «Más».
+- [x] **R6. Preferencias de datos** — nueva pantalla «Datos de importación» desde Más →
+      Preferencias: lista usuarios guardados con nº de partidas, borrado por usuario o todo con
+      confirmación, y estado vacío. Test de borrado.
 
 ## 4. Después: rebrand técnico (requiere decisiones del usuario)
 

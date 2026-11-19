@@ -15,6 +15,7 @@ import 'package:lichess_mobile/src/view/board_editor/board_editor_screen.dart';
 import 'package:lichess_mobile/src/view/clock/clock_tool_screen.dart';
 import 'package:lichess_mobile/src/view/explorer/opening_explorer_screen.dart';
 import 'package:lichess_mobile/src/view/import/import_hub_screen.dart';
+import 'package:lichess_mobile/src/view/settings/import_data_screen.dart';
 import 'package:lichess_mobile/src/view/settings/settings_screen.dart';
 import 'package:lichess_mobile/src/widgets/feedback.dart';
 import 'package:lichess_mobile/src/widgets/list.dart';
@@ -135,6 +136,13 @@ class const _Body() extends ConsumerWidget {
                 trailing: isIOS ? const CupertinoListTileChevron() : null,
                 title: Text(context.l10n.settingsSettings),
                 onTap: () => Navigator.of(context).push(SettingsScreen.buildRoute()),
+              ),
+              ListTile(
+                leading: const Icon(Icons.storage_outlined),
+                trailing: isIOS ? const CupertinoListTileChevron() : null,
+                title: Text(context.l10n.mobileImportData),
+                subtitle: Text(context.l10n.mobileImportDataSubtitle),
+                onTap: () => Navigator.of(context).push(ImportDataScreen.buildRoute()),
               ),
             ],
           ),

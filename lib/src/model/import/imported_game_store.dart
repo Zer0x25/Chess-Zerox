@@ -199,3 +199,17 @@ final importedGameStoreProvider = FutureProvider<ImportedGameStore>((ref) async 
   final db = await ref.watch(databaseProvider.future);
   return ImportedGameStore(db);
 }, name: 'ImportedGameStoreProvider');
+
+final importedSourcesProvider = FutureProvider<List<({StoredImportSource source, int gameCount})>>((
+  ref,
+) async {
+  final store = await ref.watch(importedGameStoreProvider.future);
+  final sources = await store.listSources();
+  return [
+    for (final source in sources)
+      (
+        source: source,
+        gameCount: await store.countGames(source: source.source, username: source.username),
+      ),
+  ];
+}, name: 'ImportedSourcesProvider');

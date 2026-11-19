@@ -107,6 +107,20 @@
     }
   },
   "mobileImportNoNewGames": "No new games",
+  "mobileImportData": "Import data",
+  "mobileImportDataSubtitle": "Saved usernames and games",
+  "mobileImportClearAll": "Delete all data",
+  "mobileImportClearConfirm": "Delete saved data?",
+  "mobileImportClearConfirmBody": "Usernames and games stored on this device will be deleted.",
+  "mobileImportNoData": "No saved data",
+  "mobileImportGamesCount": "{param} games",
+  "@mobileImportGamesCount": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
   "mobileImportFromLichess": "Import from Lichess",
   "mobileImportFromChessCom": "Import from Chess.com",
   "mobileImportUsername": "Username",

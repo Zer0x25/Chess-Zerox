@@ -210,6 +210,29 @@ class AppLocalizationsEs extends AppLocalizations {
   String get mobileImportNoNewGames => 'No hay partidas nuevas';
 
   @override
+  String get mobileImportData => 'Datos de importación';
+
+  @override
+  String get mobileImportDataSubtitle => 'Usuarios y partidas guardados';
+
+  @override
+  String get mobileImportClearAll => 'Borrar todos los datos';
+
+  @override
+  String get mobileImportClearConfirm => '¿Borrar los datos guardados?';
+
+  @override
+  String get mobileImportClearConfirmBody => 'Se borrarán los usuarios y las partidas guardados en este dispositivo.';
+
+  @override
+  String get mobileImportNoData => 'No hay datos guardados';
+
+  @override
+  String mobileImportGamesCount(String param) {
+    return '$param partidas';
+  }
+
+  @override
   String get mobileImportFromLichess => 'Importar desde Lichess';
 
   @override

@@ -51,6 +51,13 @@
   <string name="importUpdate" comment="Button that refreshes the saved games of a username, importing only newer ones.">Actualizar</string>
   <string name="importNewGames" comment="Feedback after importing games. %s is the number of newly saved games.">%s partidas nuevas</string>
   <string name="importNoNewGames" comment="Feedback after an update finds no newer games than the ones already saved.">No hay partidas nuevas</string>
+  <string name="importData" comment="Settings entry for managing locally saved import data.">Datos de importación</string>
+  <string name="importDataSubtitle" comment="Subtitle of the import data settings entry.">Usuarios y partidas guardados</string>
+  <string name="importClearAll" comment="Button that deletes all locally saved usernames and games.">Borrar todos los datos</string>
+  <string name="importClearConfirm" comment="Confirmation dialog before deleting locally saved import data.">¿Borrar los datos guardados?</string>
+  <string name="importClearConfirmBody" comment="Body of the confirmation dialog before deleting locally saved import data.">Se borrarán los usuarios y las partidas guardados en este dispositivo.</string>
+  <string name="importNoData" comment="Empty state of the import data settings screen.">No hay datos guardados</string>
+  <string name="importGamesCount" comment="Number of locally saved games. %s is the count.">%s partidas</string>
   <string name="importNoGamesFound" comment="Title of the empty state when a player has no importable games.">No se encontraron partidas</string>
   <string name="importNoStandardGames" comment="Message when a player has no recent public standard chess games.">Este jugador no tiene partidas estándar públicas recientes.</string>
   <string name="importEnterUsername" comment="Error shown when the username field is empty.">Introduce primero un nombre de usuario.</string>

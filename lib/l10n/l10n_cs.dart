@@ -210,6 +210,29 @@ class AppLocalizationsCs extends AppLocalizations {
   String get mobileImportNoNewGames => 'No new games';
 
   @override
+  String get mobileImportData => 'Import data';
+
+  @override
+  String get mobileImportDataSubtitle => 'Saved usernames and games';
+
+  @override
+  String get mobileImportClearAll => 'Delete all data';
+
+  @override
+  String get mobileImportClearConfirm => 'Delete saved data?';
+
+  @override
+  String get mobileImportClearConfirmBody => 'Usernames and games stored on this device will be deleted.';
+
+  @override
+  String get mobileImportNoData => 'No saved data';
+
+  @override
+  String mobileImportGamesCount(String param) {
+    return '$param games';
+  }
+
+  @override
   String get mobileImportFromLichess => 'Import from Lichess';
 
   @override

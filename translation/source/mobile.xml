@@ -63,6 +63,13 @@
   <string name="importUpdate" comment="Button that refreshes the saved games of a username, importing only newer ones.">Update</string>
   <string name="importNewGames" comment="Feedback after importing games. %s is the number of newly saved games.">%s new games</string>
   <string name="importNoNewGames" comment="Feedback after an update finds no newer games than the ones already saved.">No new games</string>
+  <string name="importData" comment="Settings entry for managing locally saved import data.">Import data</string>
+  <string name="importDataSubtitle" comment="Subtitle of the import data settings entry.">Saved usernames and games</string>
+  <string name="importClearAll" comment="Button that deletes all locally saved usernames and games.">Delete all data</string>
+  <string name="importClearConfirm" comment="Confirmation dialog before deleting locally saved import data.">Delete saved data?</string>
+  <string name="importClearConfirmBody" comment="Body of the confirmation dialog before deleting locally saved import data.">Usernames and games stored on this device will be deleted.</string>
+  <string name="importNoData" comment="Empty state of the import data settings screen.">No saved data</string>
+  <string name="importGamesCount" comment="Number of locally saved games. %s is the count.">%s games</string>
   <string name="importFromLichess" comment="Title of the screen that lists public Lichess games by username.">Import from Lichess</string>
   <string name="importFromChessCom" comment="Title of the screen that lists public Chess.com games by username.">Import from Chess.com</string>
   <string name="importUsername" comment="Label of the username field when importing games.">Username</string>
