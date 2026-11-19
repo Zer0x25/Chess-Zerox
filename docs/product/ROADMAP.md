@@ -54,19 +54,20 @@ La navegación se reduce a lo esencial:
 El teléfono no está disponible, así que se avanza solo con código verificable por
 `flutter analyze` y `flutter test` (sin validación en dispositivo).
 
-- [ ] **R1. Simplificar la barra de pestañas** — quitar Ejercicios/Aprender/Ver de la enum,
+- [x] **R1. Simplificar la barra de pestañas** — quitar Ejercicios/Aprender/Ver de la enum,
       del `NavigationBar` y de las rutas de la barra; dejar Inicio / Analizar / Más.
-- [ ] **R2. Reordenar «Más»** — agrupar Herramientas (importar), Preferencias y Acerca de;
-      sacar Donaciones/Comunidad del «Inicio» visible.
-- [ ] **R3. Ajustar textos y tests** — actualizar etiquetas Traducidas y los tests de navegación
-      que asumen el conjunto antiguo de pestañas.
+- [x] **R2. Reordenar «Más»** — Herramientas (importar, análisis, explorador, editor, reloj),
+      Preferencias y Acerca de; fuera Comunidad, Donaciones y la cuenta. También se quitaron
+      los botones de Donar/Acerca de la pantalla de bienvenida de Inicio.
+- [x] **R3. Ajustar textos y tests** — nueva clave `mobileAnalysisTab` («Análisis» en ES) y tests
+      de navegación/importación/análisis actualizados. `flutter analyze` limpio.
 
 ## 3. Siguiente: caché e importación incremental
 
 Según `CACHE_Y_MARCA.md`:
 
-- [ ] **R4. Migración sqflite + `ImportedGameStore`** — tablas `import_sources` e
-      `imported_games`, con tests sin red.
+- [x] **R4. Migración sqflite + `ImportedGameStore`** — base de datos v10 con tablas
+      `import_sources` e `imported_games`, cursor por fuente/usuario, tests sin red (7 tests).
 - [ ] **R5. Conectar la pantalla de importación al almacén** — listar guardadas, cursor
       `last_played_at`, mostrar «N partidas nuevas», botón Actualizar y elegir 10/30/100.
 - [ ] **R6. Preferencias de datos** — borrar usuarios/partidas guardadas desde «Más».

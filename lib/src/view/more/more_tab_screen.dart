@@ -1,14 +1,22 @@
 import 'package:cupertino_ui/cupertino_ui.dart';
+import 'package:dartchess/dartchess.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:lichess_mobile/src/model/analysis/analysis_controller.dart';
+import 'package:lichess_mobile/src/model/auth/auth_controller.dart';
 import 'package:lichess_mobile/src/model/common/chess.dart';
+import 'package:lichess_mobile/src/model/common/id.dart';
+import 'package:lichess_mobile/src/network/connectivity.dart';
 import 'package:lichess_mobile/src/styles/styles.dart';
 import 'package:lichess_mobile/src/tab_navigation.dart';
 import 'package:lichess_mobile/src/utils/l10n_context.dart';
 import 'package:lichess_mobile/src/view/account/account_menu.dart';
+import 'package:lichess_mobile/src/view/analysis/analysis_screen.dart';
 import 'package:lichess_mobile/src/view/board_editor/board_editor_screen.dart';
 import 'package:lichess_mobile/src/view/clock/clock_tool_screen.dart';
+import 'package:lichess_mobile/src/view/explorer/opening_explorer_screen.dart';
 import 'package:lichess_mobile/src/view/import/import_hub_screen.dart';
 import 'package:lichess_mobile/src/view/settings/settings_screen.dart';
+import 'package:lichess_mobile/src/widgets/feedback.dart';
 import 'package:lichess_mobile/src/widgets/list.dart';
 import 'package:lichess_mobile/src/widgets/misc.dart';
 import 'package:lichess_mobile/src/widgets/platform.dart';
@@ -42,9 +50,11 @@ class const MoreTabScreen({super.key}) extends ConsumerWidget {
   }
 }
 
-class const _Body() extends StatelessWidget {
+class const _Body() extends ConsumerWidget {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isOnline = ref.watch(isDeviceOnlineProvider);
+    final authUser = ref.watch(authControllerProvider);
     final isIOS = Theme.of(context).platform == TargetPlatform.iOS;
 
     return ListTileTheme.merge(
@@ -62,6 +72,39 @@ class const _Body() extends StatelessWidget {
                 title: Text(context.l10n.mobileImportGame),
                 subtitle: Text(context.l10n.mobileImportGameSubtitle),
                 onTap: () => Navigator.of(context).push(ImportHubScreen.buildRoute()),
+              ),
+              ListTile(
+                leading: const Icon(Icons.biotech_outlined),
+                trailing: isIOS ? const CupertinoListTileChevron() : null,
+                title: Text(context.l10n.analysis),
+                onTap: () => Navigator.of(context).pushHidingTabBar(
+                  AnalysisScreen.buildRoute(
+                    const AnalysisOptions.standalone(variant: Variant.standard),
+                  ),
+                ),
+              ),
+              ListTile(
+                leading: const Icon(Icons.explore_outlined),
+                trailing: isIOS ? const CupertinoListTileChevron() : null,
+                title: Text(context.l10n.openingExplorer),
+                enabled: isOnline,
+                onTap: () {
+                  if (authUser == null) {
+                    showSnackBar(context, context.l10n.youNeedAnAccountToDoThat);
+                    return;
+                  }
+                  Navigator.of(context).pushHidingTabBar(
+                    OpeningExplorerScreen.buildRoute(
+                      const AnalysisOptions.pgn(
+                        id: StringId('standalone_opening_explorer'),
+                        orientation: Side.white,
+                        pgn: '',
+                        isComputerAnalysisAllowed: false,
+                        variant: Variant.standard,
+                      ),
+                    ),
+                  );
+                },
               ),
               ListTile(
                 leading: const Icon(Icons.edit_outlined),

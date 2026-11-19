@@ -63,7 +63,7 @@ Future<Database> openAppDatabase(DatabaseFactory dbFactory, String path) {
   return dbFactory.openDatabase(
     path,
     options: OpenDatabaseOptions(
-      version: 9,
+      version: 10,
       onConfigure: (db) async {
         final version = await _getDatabaseVersion(db);
         _logger.info('SQLite version: $version');
@@ -96,6 +96,7 @@ Future<Database> openAppDatabase(DatabaseFactory dbFactory, String path) {
         _createAppLogTableV5(batch);
         _createLearnProgressTableV7(batch);
         _createPracticeProgressTableV8(batch);
+        _createImportTablesV10(batch);
         await batch.commit();
       },
       onUpgrade: (db, oldVersion, newVersion) async {
@@ -122,6 +123,9 @@ Future<Database> openAppDatabase(DatabaseFactory dbFactory, String path) {
         }
         if (oldVersion < 8) {
           _createPracticeProgressTableV8(batch);
+        }
+        if (oldVersion < 10) {
+          _createImportTablesV10(batch);
         }
         await batch.commit();
       },
@@ -282,6 +286,38 @@ void _createPracticeProgressTableV8(Batch batch) {
     lastModified TEXT NOT NULL,
     syncedAt TEXT
   )
+    ''');
+}
+
+void _createImportTablesV10(Batch batch) {
+  batch.execute('''
+    CREATE TABLE IF NOT EXISTS import_sources(
+      source TEXT NOT NULL,
+      username TEXT NOT NULL,
+      last_played_at INTEGER,
+      last_sync_at INTEGER NOT NULL,
+      PRIMARY KEY (source, username)
+    )
+    ''');
+  batch.execute('''
+    CREATE TABLE IF NOT EXISTS imported_games(
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      source TEXT NOT NULL,
+      username TEXT NOT NULL,
+      external_id TEXT NOT NULL,
+      played_at INTEGER,
+      white TEXT,
+      black TEXT,
+      result TEXT,
+      speed TEXT,
+      pgn TEXT NOT NULL,
+      imported_at INTEGER NOT NULL,
+      UNIQUE (source, external_id)
+    )
+    ''');
+  batch.execute('''
+    CREATE INDEX IF NOT EXISTS idx_imported_games_source_played
+    ON imported_games(source, played_at DESC)
     ''');
 }
 
