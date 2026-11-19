@@ -221,8 +221,10 @@ class GameReviewController(final AnalysisOptions options) extends AsyncNotifier<
     required int ply,
   }) {
     final side = branch.position.turn == Side.white ? Side.black : Side.white;
-    final beforeWin = before.winningChances(side) * 100;
-    final afterWin = after.winningChances(side) * 100;
+    // winningChances runs from -100 (lost) to +100 (won); bring it to 0-100 for display and for
+    // the verdict thresholds, where 50 means an equal position.
+    final beforeWin = (before.winningChances(side) + 1) * 50;
+    final afterWin = (after.winningChances(side) + 1) * 50;
     final shift = Eval.winningChancesPovDiff(side, before, after).clamp(0, 1).toDouble();
     final isBestMove = before.bestMove == branch.sanMove.move;
     final verdict = classifyMove(
