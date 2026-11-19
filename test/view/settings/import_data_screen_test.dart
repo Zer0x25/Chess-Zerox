@@ -46,7 +46,7 @@ void main() {
     final app = await makeTestProviderScopeApp(
       tester,
       home: const ImportDataScreen(),
-      overrides: {databaseProvider: databaseProvider.overrideWith((ref) async => db)},
+      overrides: {databaseProvider: databaseProvider.overrideWith((ref) => db)},
     );
     await tester.pumpWidget(app);
     await tester.pumpAndSettle();
