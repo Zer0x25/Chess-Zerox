@@ -88,6 +88,45 @@
     }
   },
   "mobileInvalidOrExpiredLoginCode": "This code is invalid or has expired.",
+  "mobileImportGame": "Import game",
+  "mobileImportSources": "Sources",
+  "mobileImportLocal": "Local",
+  "mobileImportByUsername": "Import public games by username",
+  "mobileImportPgnSubtitle": "Paste a PGN or open a file",
+  "mobileImportDisclaimer": "Games are fetched from the public Lichess and Chess.com APIs. This app is not affiliated with either platform.",
+  "mobileImportFromLichess": "Import from Lichess",
+  "mobileImportFromChessCom": "Import from Chess.com",
+  "mobileImportUsername": "Username",
+  "mobileImportUsernameExample": "e.g. {param}",
+  "@mobileImportUsernameExample": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "mobileImportSearchGames": "Search games",
+  "mobileImportPublicOnlyLichess": "Public games only. You do not need to log in.",
+  "mobileImportPublicOnlyChessCom": "Public games only. For private games, export the PGN and use Import PGN.",
+  "mobileImportNoGames": "No games loaded yet",
+  "mobileImportNoGamesLichess": "Enter a Lichess username to see their latest public games.",
+  "mobileImportNoGamesChessCom": "Enter a Chess.com username to see their latest public games.",
+  "mobileImportRetry": "Retry",
+  "mobileImportNoGamesFound": "No games found",
+  "mobileImportNoStandardGames": "This player has no recent public standard games.",
+  "mobileImportEnterUsername": "Enter a username first.",
+  "mobileImportStandardOnly": "Only standard chess is supported for now.",
+  "mobileImportOpenError": "Could not open the game: {param}",
+  "@mobileImportOpenError": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "mobileImportLoadError": "Could not load games. Check your connection and try again.",
+  "mobileImportPlayerNotFound": "Player not found on Chess.com.",
+  "mobileImportRateLimited": "Chess.com is rate limiting requests. Wait a minute and try again.",
   "mobileLocalDatabaseSize": "Local database size",
   "mobileMoveOnRelease": "Move on release",
   "mobileMoveOnReleaseSubtitle": "When moving a piece by tapping, the move is made when you lift your finger, letting you slide to change the destination square.",

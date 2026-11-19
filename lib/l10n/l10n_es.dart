@@ -172,6 +172,85 @@ class AppLocalizationsEs extends AppLocalizations {
   String get mobileInvalidOrExpiredLoginCode => 'Este código no es válido o ha caducado.';
 
   @override
+  String get mobileImportGame => 'Importar partida';
+
+  @override
+  String get mobileImportSources => 'Fuentes';
+
+  @override
+  String get mobileImportLocal => 'Local';
+
+  @override
+  String get mobileImportByUsername => 'Importar partidas públicas por nombre de usuario';
+
+  @override
+  String get mobileImportPgnSubtitle => 'Pega un PGN o abre un archivo';
+
+  @override
+  String get mobileImportDisclaimer => 'Las partidas se obtienen de las APIs públicas de Lichess y Chess.com. Esta app no está afiliada a ninguna de las dos plataformas.';
+
+  @override
+  String get mobileImportFromLichess => 'Importar desde Lichess';
+
+  @override
+  String get mobileImportFromChessCom => 'Importar desde Chess.com';
+
+  @override
+  String get mobileImportUsername => 'Nombre de usuario';
+
+  @override
+  String mobileImportUsernameExample(String param) {
+    return 'p. ej. $param';
+  }
+
+  @override
+  String get mobileImportSearchGames => 'Buscar partidas';
+
+  @override
+  String get mobileImportPublicOnlyLichess => 'Solo partidas públicas. No hace falta iniciar sesión.';
+
+  @override
+  String get mobileImportPublicOnlyChessCom => 'Solo partidas públicas. Para partidas privadas, exporta el PGN y usa Importar PGN.';
+
+  @override
+  String get mobileImportNoGames => 'Aún no hay partidas cargadas';
+
+  @override
+  String get mobileImportNoGamesLichess => 'Introduce un nombre de usuario de Lichess para ver sus últimas partidas públicas.';
+
+  @override
+  String get mobileImportNoGamesChessCom => 'Introduce un nombre de usuario de Chess.com para ver sus últimas partidas públicas.';
+
+  @override
+  String get mobileImportRetry => 'Reintentar';
+
+  @override
+  String get mobileImportNoGamesFound => 'No se encontraron partidas';
+
+  @override
+  String get mobileImportNoStandardGames => 'Este jugador no tiene partidas estándar públicas recientes.';
+
+  @override
+  String get mobileImportEnterUsername => 'Introduce primero un nombre de usuario.';
+
+  @override
+  String get mobileImportStandardOnly => 'Por ahora solo se admite el ajedrez estándar.';
+
+  @override
+  String mobileImportOpenError(String param) {
+    return 'No se pudo abrir la partida: $param';
+  }
+
+  @override
+  String get mobileImportLoadError => 'No se pudieron cargar las partidas. Comprueba tu conexión e inténtalo de nuevo.';
+
+  @override
+  String get mobileImportPlayerNotFound => 'No se encontró al jugador en Chess.com.';
+
+  @override
+  String get mobileImportRateLimited => 'Chess.com está limitando las peticiones. Espera un minuto e inténtalo de nuevo.';
+
+  @override
   String get mobileLocalDatabaseSize => 'Tamaño de base de datos local';
 
   @override

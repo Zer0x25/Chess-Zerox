@@ -9,12 +9,20 @@ const _chessComBaseHost = 'api.chess.com';
 const _chessComUserAgent = 'ChessZerox/0.1 (contact: dev@chesszerox.local)';
 const _cacheTtl = Duration(hours: 12);
 
+/// The kind of failure, so the UI can show a localized message.
+enum ChessComErrorKind() {
+  playerNotFound,
+  rateLimited,
+  other,
+}
+
 /// Thrown when Chess.com cannot be reached or returns an unexpected response.
-class const ChessComException(final String message) implements Exception {
-  const new playerNotFound() : this('Player not found on Chess.com.');
+class const ChessComException(final String message, [final ChessComErrorKind kind = .other])
+    implements Exception {
+  const new playerNotFound() : this('Player not found on Chess.com.', .playerNotFound);
 
   const new rateLimited()
-    : this('Chess.com is rate limiting requests. Wait a minute and try again.');
+    : this('Chess.com is rate limiting requests. Wait a minute and try again.', .rateLimited);
 
   @override
   String toString() => message;

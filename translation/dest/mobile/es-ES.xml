@@ -29,6 +29,31 @@
   <string name="customizeButton" comment="Text of a button, so translation should be short." maxLength="10">Personalizar</string>
   <string name="customizeHomeTip" comment="Shown in a widget on the home screen to let the user know that they can customize their homescreen">Consejo: ¡Puedes añadir más componentes a la pantalla de inicio o eliminar aquellos que no necesitas!</string>
   <string name="customizeHomeTipDismiss" comment="Hides the widget to customize the home screen.">Descartar</string>
+  <string name="importGame" comment="Title of the Chess Zerox screen that lets the user import a game from Lichess, Chess.com or a PGN.">Importar partida</string>
+  <string name="importSources" comment="Section header listing the online sources a game can be imported from.">Fuentes</string>
+  <string name="importLocal" comment="Section header for importing a PGN stored on the device.">Local</string>
+  <string name="importByUsername" comment="Subtitle of the Lichess and Chess.com import options.">Importar partidas públicas por nombre de usuario</string>
+  <string name="importPgnSubtitle" comment="Subtitle of the PGN import option.">Pega un PGN o abre un archivo</string>
+  <string name="importDisclaimer" comment="Disclaimer shown at the bottom of the import screen.">Las partidas se obtienen de las APIs públicas de Lichess y Chess.com. Esta app no está afiliada a ninguna de las dos plataformas.</string>
+  <string name="importFromLichess" comment="Title of the screen that lists public Lichess games by username.">Importar desde Lichess</string>
+  <string name="importFromChessCom" comment="Title of the screen that lists public Chess.com games by username.">Importar desde Chess.com</string>
+  <string name="importUsername" comment="Label of the username field when importing games.">Nombre de usuario</string>
+  <string name="importUsernameExample" comment="Example username shown as a hint. %s is a well known player name.">p. ej. %s</string>
+  <string name="importSearchGames" comment="Button that searches for the public games of a username.">Buscar partidas</string>
+  <string name="importPublicOnlyLichess" comment="Help text below the username field on the Lichess import screen.">Solo partidas públicas. No hace falta iniciar sesión.</string>
+  <string name="importPublicOnlyChessCom" comment="Help text below the username field on the Chess.com import screen.">Solo partidas públicas. Para partidas privadas, exporta el PGN y usa Importar PGN.</string>
+  <string name="importNoGames" comment="Empty state title before searching for games to import.">Aún no hay partidas cargadas</string>
+  <string name="importNoGamesLichess" comment="Empty state message before searching for Lichess games.">Introduce un nombre de usuario de Lichess para ver sus últimas partidas públicas.</string>
+  <string name="importNoGamesChessCom" comment="Empty state message before searching for Chess.com games.">Introduce un nombre de usuario de Chess.com para ver sus últimas partidas públicas.</string>
+  <string name="importRetry" comment="Button retrying a failed game import search. Should be short.">Reintentar</string>
+  <string name="importNoGamesFound" comment="Title of the empty state when a player has no importable games.">No se encontraron partidas</string>
+  <string name="importNoStandardGames" comment="Message when a player has no recent public standard chess games.">Este jugador no tiene partidas estándar públicas recientes.</string>
+  <string name="importEnterUsername" comment="Error shown when the username field is empty.">Introduce primero un nombre de usuario.</string>
+  <string name="importStandardOnly" comment="Error shown when trying to import a non-standard chess variant.">Por ahora solo se admite el ajedrez estándar.</string>
+  <string name="importOpenError" comment="Error shown when a listed game cannot be opened. %s is the error message.">No se pudo abrir la partida: %s</string>
+  <string name="importLoadError" comment="Error shown when the list of games cannot be loaded.">No se pudieron cargar las partidas. Comprueba tu conexión e inténtalo de nuevo.</string>
+  <string name="importPlayerNotFound" comment="Error shown when Chess.com has no player with the given username.">No se encontró al jugador en Chess.com.</string>
+  <string name="importRateLimited" comment="Error shown when Chess.com rejects requests for being too frequent.">Chess.com está limitando las peticiones. Espera un minuto e inténtalo de nuevo.</string>
   <string name="deleteAllLogsConfirmation" comment="Title of the confirmation dialog asking whether to delete all stored logs.">¿Quieres eliminar todos los registros?</string>
   <string name="dangerZone" comment="Header of the settings section containing account deletion.">Zona de riesgo</string>
   <string name="deleteYourAccount" comment="iOS-only settings entry that opens the account deletion page.">Eliminar tu cuenta</string>

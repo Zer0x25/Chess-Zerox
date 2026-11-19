@@ -4,6 +4,7 @@ import 'package:lichess_mobile/src/model/import/chesscom_client.dart';
 import 'package:lichess_mobile/src/model/import/import_providers.dart';
 import 'package:lichess_mobile/src/model/import/imported_game.dart';
 import 'package:lichess_mobile/src/styles/styles.dart';
+import 'package:lichess_mobile/src/utils/l10n_context.dart';
 import 'package:lichess_mobile/src/utils/navigation.dart';
 import 'package:lichess_mobile/src/view/more/import_pgn_screen.dart';
 import 'package:lichess_mobile/src/widgets/feedback.dart';
@@ -35,7 +36,7 @@ class _UsernameImportScreenState() extends ConsumerState<UsernameImportScreen> {
   void _search() {
     final username = _controller.text.trim();
     if (username.isEmpty) {
-      showSnackBar(context, 'Enter a username first.', type: .error);
+      showSnackBar(context, context.l10n.mobileImportEnterUsername, type: .error);
       return;
     }
 
@@ -54,7 +55,7 @@ class _UsernameImportScreenState() extends ConsumerState<UsernameImportScreen> {
 
   Future<void> _openGame(ImportedGame game) async {
     if (!game.isStandardVariant) {
-      showSnackBar(context, 'Only standard chess is supported for now.', type: .error);
+      showSnackBar(context, context.l10n.mobileImportStandardOnly, type: .error);
       return;
     }
 
@@ -67,7 +68,7 @@ class _UsernameImportScreenState() extends ConsumerState<UsernameImportScreen> {
       ImportPgnScreen.handlePgnText(context, pgn, id: StringId('import_$safeId'));
     } catch (error) {
       if (mounted) {
-        showSnackBar(context, 'Could not open the game: $error', type: .error);
+        showSnackBar(context, context.l10n.mobileImportOpenError('$error'), type: .error);
       }
     } finally {
       if (mounted) setState(() => _openingGameId = null);
@@ -77,7 +78,13 @@ class _UsernameImportScreenState() extends ConsumerState<UsernameImportScreen> {
   @override
   Widget build(BuildContext context) {
     return PlatformScaffold(
-      appBar: PlatformAppBar(title: Text('Import from ${widget.source.label}')),
+      appBar: PlatformAppBar(
+        title: Text(
+          widget.source == .lichess
+              ? context.l10n.mobileImportFromLichess
+              : context.l10n.mobileImportFromChessCom,
+        ),
+      ),
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -96,9 +103,11 @@ class _UsernameImportScreenState() extends ConsumerState<UsernameImportScreen> {
                     enableSuggestions: false,
                     autofillHints: const [AutofillHints.username],
                     decoration: InputDecoration(
-                      labelText: 'Username',
+                      labelText: context.l10n.mobileImportUsername,
                       prefixIcon: const Icon(Icons.person_outline),
-                      hintText: widget.source == .lichess ? 'e.g. MagnusCarlsen' : 'e.g. Hikaru',
+                      hintText: context.l10n.mobileImportUsernameExample(
+                        widget.source == .lichess ? 'MagnusCarlsen' : 'Hikaru',
+                      ),
                     ),
                     onSubmitted: (_) => _search(),
                   ),
@@ -106,11 +115,13 @@ class _UsernameImportScreenState() extends ConsumerState<UsernameImportScreen> {
                   FilledButton.icon(
                     onPressed: _openingGameId == null ? _search : null,
                     icon: const Icon(Icons.search),
-                    label: const Text('Search games'),
+                    label: Text(context.l10n.mobileImportSearchGames),
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    widget.source == .lichess ? 'Public games only. You do not need to log in.' : 'Public games only. For private games, export the PGN and use Import PGN.',
+                    widget.source == .lichess
+                        ? context.l10n.mobileImportPublicOnlyLichess
+                        : context.l10n.mobileImportPublicOnlyChessCom,
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                 ],
@@ -128,10 +139,10 @@ class _UsernameImportScreenState() extends ConsumerState<UsernameImportScreen> {
     if (future == null) {
       return _EmptyState(
         icon: Icons.download_outlined,
-        title: 'No games loaded yet',
+        title: context.l10n.mobileImportNoGames,
         message: widget.source == .lichess
-            ? 'Enter a Lichess username to see their latest public games.'
-            : 'Enter a Chess.com username to see their latest public games.',
+            ? context.l10n.mobileImportNoGamesLichess
+            : context.l10n.mobileImportNoGamesChessCom,
       );
     }
 
@@ -153,12 +164,15 @@ class _UsernameImportScreenState() extends ConsumerState<UsernameImportScreen> {
                   const Icon(Icons.error_outline, size: 48),
                   const SizedBox(height: 12),
                   Text(
-                    _errorMessage(error),
+                    _errorMessage(context, error),
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                   const SizedBox(height: 12),
-                  FilledButton.tonal(onPressed: _search, child: const Text('Retry')),
+                  FilledButton.tonal(
+                    onPressed: _search,
+                    child: Text(context.l10n.mobileImportRetry),
+                  ),
                 ],
               ),
             ),
@@ -167,10 +181,10 @@ class _UsernameImportScreenState() extends ConsumerState<UsernameImportScreen> {
 
         final games = snapshot.data ?? const <ImportedGame>[];
         if (games.isEmpty) {
-          return const _EmptyState(
+          return _EmptyState(
             icon: Icons.search_off,
-            title: 'No games found',
-            message: 'This player has no recent public standard games.',
+            title: context.l10n.mobileImportNoGamesFound,
+            message: context.l10n.mobileImportNoStandardGames,
           );
         }
 
@@ -209,9 +223,15 @@ class _UsernameImportScreenState() extends ConsumerState<UsernameImportScreen> {
     );
   }
 
-  String _errorMessage(Object error) {
-    if (error is ChessComException) return error.message;
-    return 'Could not load games. Check your connection and try again.';
+  String _errorMessage(BuildContext context, Object error) {
+    if (error is ChessComException) {
+      return switch (error.kind) {
+        .playerNotFound => context.l10n.mobileImportPlayerNotFound,
+        .rateLimited => context.l10n.mobileImportRateLimited,
+        .other => error.message,
+      };
+    }
+    return context.l10n.mobileImportLoadError;
   }
 }
 

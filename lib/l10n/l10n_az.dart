@@ -172,6 +172,85 @@ class AppLocalizationsAz extends AppLocalizations {
   String get mobileInvalidOrExpiredLoginCode => 'This code is invalid or has expired.';
 
   @override
+  String get mobileImportGame => 'Import game';
+
+  @override
+  String get mobileImportSources => 'Sources';
+
+  @override
+  String get mobileImportLocal => 'Local';
+
+  @override
+  String get mobileImportByUsername => 'Import public games by username';
+
+  @override
+  String get mobileImportPgnSubtitle => 'Paste a PGN or open a file';
+
+  @override
+  String get mobileImportDisclaimer => 'Games are fetched from the public Lichess and Chess.com APIs. This app is not affiliated with either platform.';
+
+  @override
+  String get mobileImportFromLichess => 'Import from Lichess';
+
+  @override
+  String get mobileImportFromChessCom => 'Import from Chess.com';
+
+  @override
+  String get mobileImportUsername => 'Username';
+
+  @override
+  String mobileImportUsernameExample(String param) {
+    return 'e.g. $param';
+  }
+
+  @override
+  String get mobileImportSearchGames => 'Search games';
+
+  @override
+  String get mobileImportPublicOnlyLichess => 'Public games only. You do not need to log in.';
+
+  @override
+  String get mobileImportPublicOnlyChessCom => 'Public games only. For private games, export the PGN and use Import PGN.';
+
+  @override
+  String get mobileImportNoGames => 'No games loaded yet';
+
+  @override
+  String get mobileImportNoGamesLichess => 'Enter a Lichess username to see their latest public games.';
+
+  @override
+  String get mobileImportNoGamesChessCom => 'Enter a Chess.com username to see their latest public games.';
+
+  @override
+  String get mobileImportRetry => 'Retry';
+
+  @override
+  String get mobileImportNoGamesFound => 'No games found';
+
+  @override
+  String get mobileImportNoStandardGames => 'This player has no recent public standard games.';
+
+  @override
+  String get mobileImportEnterUsername => 'Enter a username first.';
+
+  @override
+  String get mobileImportStandardOnly => 'Only standard chess is supported for now.';
+
+  @override
+  String mobileImportOpenError(String param) {
+    return 'Could not open the game: $param';
+  }
+
+  @override
+  String get mobileImportLoadError => 'Could not load games. Check your connection and try again.';
+
+  @override
+  String get mobileImportPlayerNotFound => 'Player not found on Chess.com.';
+
+  @override
+  String get mobileImportRateLimited => 'Chess.com is rate limiting requests. Wait a minute and try again.';
+
+  @override
   String get mobileLocalDatabaseSize => 'Local database size';
 
   @override

@@ -502,6 +502,156 @@ abstract class AppLocalizations {
   /// **'This code is invalid or has expired.'**
   String get mobileInvalidOrExpiredLoginCode;
 
+  /// No description provided for @mobileImportGame.
+  ///
+  /// In en, this message translates to:
+  /// **'Import game'**
+  String get mobileImportGame;
+
+  /// No description provided for @mobileImportSources.
+  ///
+  /// In en, this message translates to:
+  /// **'Sources'**
+  String get mobileImportSources;
+
+  /// No description provided for @mobileImportLocal.
+  ///
+  /// In en, this message translates to:
+  /// **'Local'**
+  String get mobileImportLocal;
+
+  /// No description provided for @mobileImportByUsername.
+  ///
+  /// In en, this message translates to:
+  /// **'Import public games by username'**
+  String get mobileImportByUsername;
+
+  /// No description provided for @mobileImportPgnSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Paste a PGN or open a file'**
+  String get mobileImportPgnSubtitle;
+
+  /// No description provided for @mobileImportDisclaimer.
+  ///
+  /// In en, this message translates to:
+  /// **'Games are fetched from the public Lichess and Chess.com APIs. This app is not affiliated with either platform.'**
+  String get mobileImportDisclaimer;
+
+  /// No description provided for @mobileImportFromLichess.
+  ///
+  /// In en, this message translates to:
+  /// **'Import from Lichess'**
+  String get mobileImportFromLichess;
+
+  /// No description provided for @mobileImportFromChessCom.
+  ///
+  /// In en, this message translates to:
+  /// **'Import from Chess.com'**
+  String get mobileImportFromChessCom;
+
+  /// No description provided for @mobileImportUsername.
+  ///
+  /// In en, this message translates to:
+  /// **'Username'**
+  String get mobileImportUsername;
+
+  /// No description provided for @mobileImportUsernameExample.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. {param}'**
+  String mobileImportUsernameExample(String param);
+
+  /// No description provided for @mobileImportSearchGames.
+  ///
+  /// In en, this message translates to:
+  /// **'Search games'**
+  String get mobileImportSearchGames;
+
+  /// No description provided for @mobileImportPublicOnlyLichess.
+  ///
+  /// In en, this message translates to:
+  /// **'Public games only. You do not need to log in.'**
+  String get mobileImportPublicOnlyLichess;
+
+  /// No description provided for @mobileImportPublicOnlyChessCom.
+  ///
+  /// In en, this message translates to:
+  /// **'Public games only. For private games, export the PGN and use Import PGN.'**
+  String get mobileImportPublicOnlyChessCom;
+
+  /// No description provided for @mobileImportNoGames.
+  ///
+  /// In en, this message translates to:
+  /// **'No games loaded yet'**
+  String get mobileImportNoGames;
+
+  /// No description provided for @mobileImportNoGamesLichess.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a Lichess username to see their latest public games.'**
+  String get mobileImportNoGamesLichess;
+
+  /// No description provided for @mobileImportNoGamesChessCom.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a Chess.com username to see their latest public games.'**
+  String get mobileImportNoGamesChessCom;
+
+  /// No description provided for @mobileImportRetry.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get mobileImportRetry;
+
+  /// No description provided for @mobileImportNoGamesFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No games found'**
+  String get mobileImportNoGamesFound;
+
+  /// No description provided for @mobileImportNoStandardGames.
+  ///
+  /// In en, this message translates to:
+  /// **'This player has no recent public standard games.'**
+  String get mobileImportNoStandardGames;
+
+  /// No description provided for @mobileImportEnterUsername.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a username first.'**
+  String get mobileImportEnterUsername;
+
+  /// No description provided for @mobileImportStandardOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'Only standard chess is supported for now.'**
+  String get mobileImportStandardOnly;
+
+  /// No description provided for @mobileImportOpenError.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not open the game: {param}'**
+  String mobileImportOpenError(String param);
+
+  /// No description provided for @mobileImportLoadError.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not load games. Check your connection and try again.'**
+  String get mobileImportLoadError;
+
+  /// No description provided for @mobileImportPlayerNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'Player not found on Chess.com.'**
+  String get mobileImportPlayerNotFound;
+
+  /// No description provided for @mobileImportRateLimited.
+  ///
+  /// In en, this message translates to:
+  /// **'Chess.com is rate limiting requests. Wait a minute and try again.'**
+  String get mobileImportRateLimited;
+
   /// No description provided for @mobileLocalDatabaseSize.
   ///
   /// In en, this message translates to:

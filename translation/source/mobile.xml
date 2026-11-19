@@ -51,6 +51,31 @@
   <string name="httpLogs" comment="Settings entry and screen title showing the network request logs stored on the device.">Network logs</string>
   <string name="ifAccountMatchesCodeSent" comment="Shown after requesting an email login code. %1$s is the email address, %2$s is the code length.">If an account matches %1$s, a %2$s character code was sent to it. Check your inbox and enter the code below.</string>
   <string name="invalidOrExpiredLoginCode" comment="Error shown when an email login code is wrong or expired.">This code is invalid or has expired.</string>
+  <string name="importGame" comment="Title of the Chess Zerox screen that lets the user import a game from Lichess, Chess.com or a PGN.">Import game</string>
+  <string name="importSources" comment="Section header listing the online sources a game can be imported from.">Sources</string>
+  <string name="importLocal" comment="Section header for importing a PGN stored on the device.">Local</string>
+  <string name="importByUsername" comment="Subtitle of the Lichess and Chess.com import options.">Import public games by username</string>
+  <string name="importPgnSubtitle" comment="Subtitle of the PGN import option.">Paste a PGN or open a file</string>
+  <string name="importDisclaimer" comment="Disclaimer shown at the bottom of the import screen.">Games are fetched from the public Lichess and Chess.com APIs. This app is not affiliated with either platform.</string>
+  <string name="importFromLichess" comment="Title of the screen that lists public Lichess games by username.">Import from Lichess</string>
+  <string name="importFromChessCom" comment="Title of the screen that lists public Chess.com games by username.">Import from Chess.com</string>
+  <string name="importUsername" comment="Label of the username field when importing games.">Username</string>
+  <string name="importUsernameExample" comment="Example username shown as a hint. %s is a well known player name.">e.g. %s</string>
+  <string name="importSearchGames" comment="Button that searches for the public games of a username.">Search games</string>
+  <string name="importPublicOnlyLichess" comment="Help text below the username field on the Lichess import screen.">Public games only. You do not need to log in.</string>
+  <string name="importPublicOnlyChessCom" comment="Help text below the username field on the Chess.com import screen.">Public games only. For private games, export the PGN and use Import PGN.</string>
+  <string name="importNoGames" comment="Empty state title before searching for games to import.">No games loaded yet</string>
+  <string name="importNoGamesLichess" comment="Empty state message before searching for Lichess games.">Enter a Lichess username to see their latest public games.</string>
+  <string name="importNoGamesChessCom" comment="Empty state message before searching for Chess.com games.">Enter a Chess.com username to see their latest public games.</string>
+  <string name="importRetry" comment="Button retrying a failed game import search. Should be short.">Retry</string>
+  <string name="importNoGamesFound" comment="Title of the empty state when a player has no importable games.">No games found</string>
+  <string name="importNoStandardGames" comment="Message when a player has no recent public standard chess games.">This player has no recent public standard games.</string>
+  <string name="importEnterUsername" comment="Error shown when the username field is empty.">Enter a username first.</string>
+  <string name="importStandardOnly" comment="Error shown when trying to import a non-standard chess variant.">Only standard chess is supported for now.</string>
+  <string name="importOpenError" comment="Error shown when a listed game cannot be opened. %s is the error message.">Could not open the game: %s</string>
+  <string name="importLoadError" comment="Error shown when the list of games cannot be loaded.">Could not load games. Check your connection and try again.</string>
+  <string name="importPlayerNotFound" comment="Error shown when Chess.com has no player with the given username.">Player not found on Chess.com.</string>
+  <string name="importRateLimited" comment="Error shown when Chess.com rejects requests for being too frequent.">Chess.com is rate limiting requests. Wait a minute and try again.</string>
   <string name="localDatabaseSize" comment="Settings screen entry showing the size of the local database.">Local database size</string>
   <string name="moveOnRelease" comment="Board settings switch: make the move when the finger is lifted instead of on tap.">Move on release</string>
   <string name="moveOnReleaseSubtitle" comment="Explanation of the 'Move on release' board setting.">When moving a piece by tapping, the move is made when you lift your finger, letting you slide to change the destination square.</string>

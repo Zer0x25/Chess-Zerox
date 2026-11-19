@@ -19,17 +19,17 @@ class const ImportHubScreen({super.key}) extends StatelessWidget {
   Widget build(BuildContext context) {
     final isIOS = Theme.of(context).platform == TargetPlatform.iOS;
     return PlatformScaffold(
-      appBar: const PlatformAppBar(title: Text('Import game')),
+      appBar: PlatformAppBar(title: Text(context.l10n.mobileImportGame)),
       body: ListView(
         children: [
           ListSection(
-            header: const SettingsSectionTitle('Sources'),
+            header: SettingsSectionTitle(context.l10n.mobileImportSources),
             hasLeading: true,
             children: [
               ListTile(
                 leading: const Icon(Icons.public),
                 title: const Text('Lichess'),
-                subtitle: const Text('Import public games by username'),
+                subtitle: Text(context.l10n.mobileImportByUsername),
                 trailing: isIOS ? const CupertinoListTileChevron() : null,
                 onTap: () =>
                     Navigator.of(context).push(UsernameImportScreen.buildRoute(source: .lichess)),
@@ -37,7 +37,7 @@ class const ImportHubScreen({super.key}) extends StatelessWidget {
               ListTile(
                 leading: const Icon(Icons.sports_esports_outlined),
                 title: const Text('Chess.com'),
-                subtitle: const Text('Import public games by username'),
+                subtitle: Text(context.l10n.mobileImportByUsername),
                 trailing: isIOS ? const CupertinoListTileChevron() : null,
                 onTap: () =>
                     Navigator.of(context).push(UsernameImportScreen.buildRoute(source: .chessCom)),
@@ -45,13 +45,13 @@ class const ImportHubScreen({super.key}) extends StatelessWidget {
             ],
           ),
           ListSection(
-            header: const SettingsSectionTitle('Local'),
+            header: SettingsSectionTitle(context.l10n.mobileImportLocal),
             hasLeading: true,
             children: [
               ListTile(
                 leading: const Icon(Icons.upload_file_outlined),
                 title: Text(context.l10n.importPgn),
-                subtitle: const Text('Paste a PGN or open a file'),
+                subtitle: Text(context.l10n.mobileImportPgnSubtitle),
                 trailing: isIOS ? const CupertinoListTileChevron() : null,
                 onTap: () => Navigator.of(context).push(ImportPgnScreen.buildRoute()),
               ),
@@ -60,8 +60,7 @@ class const ImportHubScreen({super.key}) extends StatelessWidget {
           Padding(
             padding: Styles.bodySectionPadding,
             child: Text(
-              'Games are fetched from the public Lichess and Chess.com APIs. '
-              'This app is not affiliated with either platform.',
+              context.l10n.mobileImportDisclaimer,
               style: Theme.of(context).textTheme.bodySmall,
             ),
           ),
