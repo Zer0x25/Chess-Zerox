@@ -36,6 +36,9 @@ class AppLocalizationsJa extends AppLocalizations {
   String get mobileAmoledBlack => 'AMOLED用ブラック';
 
   @override
+  String get mobileAnalysisTab => 'Analysis';
+
+  @override
   String get mobileAreYouSure => '本当にいいですか？';
 
   @override

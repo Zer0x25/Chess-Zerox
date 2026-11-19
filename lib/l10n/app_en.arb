@@ -8,6 +8,7 @@
   "mobileAllowTakebacksAndHints": "Allow takebacks and hints",
   "mobileAppLogs": "App logs",
   "mobileAmoledBlack": "Amoled black",
+  "mobileAnalysisTab": "Analysis",
   "mobileAreYouSure": "Are you sure?",
   "mobileAreYouSureDownloadNnue": "Are you sure you want to download the NNUE file ({param})?",
   "@mobileAreYouSureDownloadNnue": {

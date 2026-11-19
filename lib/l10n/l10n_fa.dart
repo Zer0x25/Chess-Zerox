@@ -36,6 +36,9 @@ class AppLocalizationsFa extends AppLocalizations {
   String get mobileAmoledBlack => 'مشکیِ دَنگابَف';
 
   @override
+  String get mobileAnalysisTab => 'Analysis';
+
+  @override
   String get mobileAreYouSure => 'مطمئنید؟';
 
   @override

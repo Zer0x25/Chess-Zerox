@@ -98,7 +98,7 @@ void main() {
         findsOneWidget,
       );
       expect(find.text('Sign in'), findsOneWidget);
-      expect(find.text('About Lichess...'), findsOneWidget);
+      expect(find.text('About Lichess...'), findsNothing);
     });
 
     testWidgets('authUser, no played game: do not show welcome screen', (tester) async {

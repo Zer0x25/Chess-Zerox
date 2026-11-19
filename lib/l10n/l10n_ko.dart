@@ -36,6 +36,9 @@ class AppLocalizationsKo extends AppLocalizations {
   String get mobileAmoledBlack => 'AMOLED 블랙';
 
   @override
+  String get mobileAnalysisTab => 'Analysis';
+
+  @override
   String get mobileAreYouSure => '확실하십니까?';
 
   @override

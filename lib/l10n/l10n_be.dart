@@ -36,6 +36,9 @@ class AppLocalizationsBe extends AppLocalizations {
   String get mobileAmoledBlack => 'Абсалютна чорны';
 
   @override
+  String get mobileAnalysisTab => 'Analysis';
+
+  @override
   String get mobileAreYouSure => 'Вы ўпэўнены?';
 
   @override

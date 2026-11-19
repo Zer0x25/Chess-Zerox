@@ -36,6 +36,9 @@ class AppLocalizationsCs extends AppLocalizations {
   String get mobileAmoledBlack => 'Amoled black';
 
   @override
+  String get mobileAnalysisTab => 'Analysis';
+
+  @override
   String get mobileAreYouSure => 'Jste si jistí?';
 
   @override

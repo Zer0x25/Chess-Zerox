@@ -36,6 +36,9 @@ class AppLocalizationsFi extends AppLocalizations {
   String get mobileAmoledBlack => 'Amoled-musta';
 
   @override
+  String get mobileAnalysisTab => 'Analysis';
+
+  @override
   String get mobileAreYouSure => 'Oletko varma?';
 
   @override

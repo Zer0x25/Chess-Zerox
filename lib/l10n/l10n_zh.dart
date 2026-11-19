@@ -36,6 +36,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get mobileAmoledBlack => 'Amoled 纯黑';
 
   @override
+  String get mobileAnalysisTab => 'Analysis';
+
+  @override
   String get mobileAreYouSure => '您确定吗？';
 
   @override

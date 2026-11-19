@@ -36,6 +36,9 @@ class AppLocalizationsGsw extends AppLocalizations {
   String get mobileAmoledBlack => 'Ächt\'s Schwarz';
 
   @override
+  String get mobileAnalysisTab => 'Analysis';
+
+  @override
   String get mobileAreYouSure => 'Bisch sicher?';
 
   @override

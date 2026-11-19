@@ -36,6 +36,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get mobileAmoledBlack => 'AMOLED-Schwarz';
 
   @override
+  String get mobileAnalysisTab => 'Analysis';
+
+  @override
   String get mobileAreYouSure => 'Bist du sicher?';
 
   @override

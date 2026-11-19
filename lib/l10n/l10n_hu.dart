@@ -36,6 +36,9 @@ class AppLocalizationsHu extends AppLocalizations {
   String get mobileAmoledBlack => 'Amoled black';
 
   @override
+  String get mobileAnalysisTab => 'Analysis';
+
+  @override
   String get mobileAreYouSure => 'Biztos vagy benne?';
 
   @override

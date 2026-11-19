@@ -93,6 +93,7 @@
   "mobileGoodMoveButThereIsBetter": "Buen movimiento, pero los hay mejores",
   "mobileHello": "Hola",
   "mobileHomeTab": "Inicio",
+  "mobileAnalysisTab": "Análisis",
   "mobileHttpLogs": "Registros de red",
   "mobileIfAccountMatchesCodeSent": "Si una cuenta coincide con {param1}, se te envió un código de {param2} caracteres. Verifica tu bandeja de entrada e ingresa el siguiente código.",
   "mobileInvalidOrExpiredLoginCode": "Este código no es válido o ha caducado.",

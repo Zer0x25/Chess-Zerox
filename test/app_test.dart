@@ -103,9 +103,12 @@ void main() {
         ? findsWidgets
         : findsOneWidget;
     expect(find.text('Home'), labelMatcher);
-    expect(find.text('Puzzles'), labelMatcher);
-    expect(find.text('Learn'), labelMatcher);
-    expect(find.text('Watch'), labelMatcher);
+    expect(find.text('Analysis'), labelMatcher);
+    expect(find.text('More'), labelMatcher);
+    // Puzzles, Learn and Watch are not part of the simplified navigation.
+    expect(find.text('Puzzles'), findsNothing);
+    expect(find.text('Learn'), findsNothing);
+    expect(find.text('Watch'), findsNothing);
   });
 
   testWidgets(

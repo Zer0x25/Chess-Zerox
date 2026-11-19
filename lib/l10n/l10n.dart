@@ -250,6 +250,12 @@ abstract class AppLocalizations {
   /// **'Amoled black'**
   String get mobileAmoledBlack;
 
+  /// No description provided for @mobileAnalysisTab.
+  ///
+  /// In en, this message translates to:
+  /// **'Analysis'**
+  String get mobileAnalysisTab;
+
   /// No description provided for @mobileAreYouSure.
   ///
   /// In en, this message translates to:

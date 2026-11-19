@@ -36,6 +36,9 @@ class AppLocalizationsSk extends AppLocalizations {
   String get mobileAmoledBlack => 'Amoled black';
 
   @override
+  String get mobileAnalysisTab => 'Analysis';
+
+  @override
   String get mobileAreYouSure => 'Ste si istý?';
 
   @override

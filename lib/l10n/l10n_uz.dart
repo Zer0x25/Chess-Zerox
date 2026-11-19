@@ -36,6 +36,9 @@ class AppLocalizationsUz extends AppLocalizations {
   String get mobileAmoledBlack => 'Qora Amoled';
 
   @override
+  String get mobileAnalysisTab => 'Analysis';
+
+  @override
   String get mobileAreYouSure => 'Işonçingiz komilmi?';
 
   @override

@@ -36,6 +36,9 @@ class AppLocalizationsEo extends AppLocalizations {
   String get mobileAmoledBlack => 'Nigra (AMOLED)';
 
   @override
+  String get mobileAnalysisTab => 'Analysis';
+
+  @override
   String get mobileAreYouSure => 'Ĉu vi certas?';
 
   @override

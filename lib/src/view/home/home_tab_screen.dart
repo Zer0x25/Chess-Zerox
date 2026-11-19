@@ -60,7 +60,6 @@ import 'package:lichess_mobile/src/widgets/platform.dart';
 import 'package:lichess_mobile/src/widgets/server_outage_display.dart';
 import 'package:lichess_mobile/src/widgets/shimmer.dart';
 import 'package:material_ui/material_ui.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 /// Number of cold app starts before hiding the home customization tip.
 const kColdAppStartsHideCustomizationTipThreshold = 5;
@@ -210,26 +209,6 @@ class _HomeScreenState() extends ConsumerState<HomeTabScreen> {
                     const Center(child: _SignInWidget()),
                     const SizedBox(height: 16.0),
                   ],
-                  if (Theme.of(context).platform != TargetPlatform.iOS &&
-                      (authUser == null || authUser.user.isPatron != true)) ...[
-                    Center(
-                      child: FilledButton.tonal(
-                        onPressed: () {
-                          launchUrl(Uri.parse('https://lichess.org/patron'));
-                        },
-                        child: Text(context.l10n.patronDonate),
-                      ),
-                    ),
-                    const SizedBox(height: 16.0),
-                  ],
-                  Center(
-                    child: FilledButton.tonal(
-                      onPressed: () {
-                        launchUrl(Uri.parse('https://lichess.org/about'));
-                      },
-                      child: Text(context.l10n.aboutX('Lichess...')),
-                    ),
-                  ),
                   const _HomeCustomizationTip(),
                 ],
               ];

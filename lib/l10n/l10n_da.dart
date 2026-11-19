@@ -36,6 +36,9 @@ class AppLocalizationsDa extends AppLocalizations {
   String get mobileAmoledBlack => 'Amoled-sort';
 
   @override
+  String get mobileAnalysisTab => 'Analysis';
+
+  @override
   String get mobileAreYouSure => 'Er du sikker?';
 
   @override

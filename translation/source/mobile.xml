@@ -9,6 +9,7 @@
   <string name="allowTakebacksAndHints" comment="Subtitle of the casual mode switch when playing against the offline computer.">Allow takebacks and hints</string>
   <string name="appLogs" comment="Settings entry and screen title showing the app logs stored on the device.">App logs</string>
   <string name="amoledBlack" comment="Name of the pure black theme mode for AMOLED screens, shown in the app theme picker.">Amoled black</string>
+  <string name="analysisTab" comment="The tab in bottom navigation bar. Must be very short (10 characters max) to avoid ugly text shifting issues." maxLength="10">Analysis</string>
   <string name="areYouSure" comment="This is shown in confirmation dialogs.">Are you sure?</string>
   <string name="areYouSureDownloadNnue" comment="Confirmation dialog before downloading the Stockfish NNUE file. %s is the download size, e.g. '40MB'.">Are you sure you want to download the NNUE file (%s)?</string>
   <string name="boardPositionLandscape" comment="Board settings entry that controls where the board sits when the device is in landscape mode.">Board position in landscape mode</string>
