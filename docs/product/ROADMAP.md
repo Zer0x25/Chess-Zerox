@@ -37,17 +37,18 @@ La navegación se reduce a lo esencial:
 
 | Pestaña | Contenido |
 |---|---|
-| **Inicio** | Acceso directo a importar partida y a las partidas recientes |
-| **Analizar** | Tablero de análisis (donde ya vive «Revisar partida») |
-| **Más** | Herramientas, preferencias y Acerca de |
+| **Inicio** | Partidas recientes y pantalla de bienvenida (el usuario decidirá su contenido final) |
+| **Analizar** | Tablero de análisis persistente (donde ya vive «Revisar partida») |
+| **Más** | Herramientas (importar, análisis, explorador, editor, reloj), preferencias (ajustes y datos de importación) y Acerca de |
 
 > Nota: el usuario traducirá personalmente el contenido de **Más**. Nosotros preparamos la
 > estructura (herramientas / preferencias / acerca de), no el texto final.
 
 ### 1.3 Secciones que salen de la navegación principal
 
-- **Donaciones** y **Comunidad** dejan de ser entradas visibles en «Inicio».
-- Se reubican dentro de «Más → Acerca de» o se retiran del todo, según decisión del usuario.
+- **Donaciones** y **Comunidad** se retiran de la navegación visible (tanto de Inicio como de Más).
+- El botón de Donar y el enlace «Acerca de Lichess…» también salen de la bienvenida de Inicio;
+  «Acerca de» sigue disponible en Más. Si el usuario quiere recuperar Donaciones, se decide luego.
 
 ## 2. Trabajo en curso (ahora, en ausencia del teléfono)
 
