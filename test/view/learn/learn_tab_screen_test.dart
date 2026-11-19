@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/testing.dart';
+import 'package:lichess_mobile/src/app.dart';
 import 'package:lichess_mobile/src/network/http.dart';
-import 'package:lichess_mobile/src/view/learn/learn_tab_screen.dart';
 import 'package:lichess_mobile/src/widgets/server_outage_display.dart';
 
 import '../../network/fake_http_client_factory.dart';
@@ -12,9 +12,9 @@ import '../../test_provider_scope.dart';
 void main() {
   group('Learn tab', () {
     testWidgets('shows the studies when the server is up', (tester) async {
-      final app = await makeTestProviderScopeApp(
+      final app = await makeTestProviderScope(
         tester,
-        home: const LearnTabScreen(),
+        child: const Application(),
         overrides: {
           httpClientFactoryProvider: httpClientFactoryProvider.overrideWith((ref) {
             return FakeHttpClientFactory(
@@ -32,6 +32,7 @@ void main() {
       await tester.pumpWidget(app);
       await tester.pumpAndSettle();
 
+      await tester.tap(find.text('Learn'));
       await tester.pumpAndSettle();
 
       expect(find.text('Coordinate training'), findsOneWidget);
@@ -41,9 +42,9 @@ void main() {
     });
 
     testWidgets('outage replaces the studies but keeps coordinate training', (tester) async {
-      final app = await makeTestProviderScopeApp(
+      final app = await makeTestProviderScope(
         tester,
-        home: const LearnTabScreen(),
+        child: const Application(),
         overrides: {
           httpClientFactoryProvider: httpClientFactoryProvider.overrideWith((ref) {
             return FakeHttpClientFactory(() => serverDownClient());
@@ -54,6 +55,7 @@ void main() {
       await tester.pumpWidget(app);
       await tester.pumpAndSettle();
 
+      await tester.tap(find.text('Learn'));
       await tester.pumpAndSettle();
 
       expect(find.byType(ServerOutageDisplay), findsOneWidget);
@@ -65,19 +67,12 @@ void main() {
     });
 
     testWidgets('offline, the studies show they are not available', (tester) async {
-      final app = await makeTestProviderScopeApp(
-        tester,
-        home: const LearnTabScreen(),
-        overrides: {
-          httpClientFactoryProvider: httpClientFactoryProvider.overrideWith((ref) {
-            return FakeHttpClientFactory(() => offlineClient);
-          }),
-        },
-      );
+      final app = await makeOfflineTestProviderScope(tester, child: const Application());
 
       await tester.pumpWidget(app);
       await tester.pumpAndSettle();
 
+      await tester.tap(find.text('Learn'));
       await tester.pumpAndSettle();
 
       expect(find.text('Study'), findsOneWidget);
@@ -90,9 +85,9 @@ void main() {
       var statusCode = 502;
       final client = serverDownClientWithStatus(() => statusCode);
 
-      final app = await makeTestProviderScopeApp(
+      final app = await makeTestProviderScope(
         tester,
-        home: const LearnTabScreen(),
+        child: const Application(),
         overrides: {
           httpClientFactoryProvider: httpClientFactoryProvider.overrideWith((ref) {
             return FakeHttpClientFactory(() => client);
@@ -103,6 +98,7 @@ void main() {
       await tester.pumpWidget(app);
       await tester.pumpAndSettle();
 
+      await tester.tap(find.text('Learn'));
       await tester.pumpAndSettle();
 
       expect(find.byType(ServerOutageDisplay), findsOneWidget);

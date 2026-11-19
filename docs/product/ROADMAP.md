@@ -15,53 +15,52 @@ Terminado y verificado:
 - `flutter analyze` limpio y 2.386 tests en verde.
 - Flujo real validado en móvil: importar → analizar → revisar → informe.
 
-## 1. Dirección nueva: interfaz mínima centrada en análisis
+## 1. Adelgazo del fork: navegación original + capa de análisis
 
-El usuario ha decidido que la app **no es un cliente de juego ni de consumo de contenido**.
-La interfaz debe quedar simple y minimizada, con el análisis/revisión como eje.
+El usuario ha revertido la reducción: la app vuelve a la **navegación original de Lichess**
+(Home / Puzzles / Learn / Watch / More). Se conserva el eje de análisis: la revisión local sigue
+accesible desde Más → Herramientas → Análisis y desde la importación (como siempre en Lichess).
 
-### 1.1 Pestañas que se QUITAN de la barra inferior
+### 1.1 Navegación restaurada
 
-Estas secciones no se usarán y dejan de ocupar espacio en la navegación principal:
+La enum de `BottomTab` vuelve a ser `home, puzzles, learn, watch, more` y la barra a tener
+los 5 items originales. No se quita ninguna pestaña ni cambia el enum en ningún momento del
+código actual: el botón «Análisis» no existe como pestaña, toda la revisión es por rutas
+(`pushHidingTabBar`), y es así como funciona Lichess.
 
-- **Ejercicios** (puzzles)
-- **Aprender** (learn)
-- **Ver** (watch)
+### 1.2 Contenido adelgazado
 
-No se borra su código —sigue en el repo y accesible por rutas internas si algún día se quiere—,
-pero desaparecen de la barra de pestañas y de los accesos visibles.
-
-### 1.2 Barra inferior resultado
-
-La navegación se reduce a lo esencial:
+Solo se adelgonzó el contenido, no la navegación:
 
 | Pestaña | Contenido |
 |---|---|
-| **Inicio** | Partidas recientes y pantalla de bienvenida (el usuario decidirá su contenido final) |
-| **Analizar** | Tablero de análisis persistente (donde ya vive «Revisar partida») |
-| **Más** | Herramientas (importar, análisis, explorador, editor, reloj), preferencias (ajustes y datos de importación) y Acerca de |
+| **Home** | Como el original, pero sin el botón de Donar y sin «Acerca de Lichess…» en la bienvenida (decisión del usuario) |
+| **Puzzles** | Como el original (sin cambios) |
+| **Learn** | Como el original (sin cambios) |
+| **Watch** | Como el original (sin cambios) |
+| **Más** | Herramientas (importar, análisis, explorador, editor, reloj), Preferencias (ajustes y datos de importación) y Acerca de; sin Comunidad/Donaciones y sin la sección de cuenta del mismo (el login sigue accesible desde Más, como en Lichess) |
 
-> Nota: el usuario traducirá personalmente el contenido de **Más**. Nosotros preparamos la
-> estructura (herramientas / preferencias / acerca de), no el texto final.
+### 1.3 Puerta de login del servidor de análisis
 
-### 1.3 Secciones que salen de la navegación principal
-
-- **Donaciones** y **Comunidad** se retiran de la navegación visible (tanto de Inicio como de Más).
-- El botón de Donar y el enlace «Acerca de Lichess…» también salen de la bienvenida de Inicio;
-  «Acerca de» sigue disponible en Más. Si el usuario quiere recuperar Donaciones, se decide luego.
+La parte de análisis que exigía cuenta — el «Solicitar análisis del ordenador» de la app
+original (`server_analysis`) — está oculta: ningún botón ahí toca la palabra «cuenta» y
+la app no muestra paredes de login. El **informe local de revisión** no la necesita:
+Corre Stockfish en el dispositivo, sin Login.
 
 ## 2. Trabajo en curso (ahora, en ausencia del teléfono)
 
 El teléfono no está disponible, así que se avanza solo con código verificable por
 `flutter analyze` y `flutter test` (sin validación en dispositivo).
 
-- [x] **R1. Simplificar la barra de pestañas** — quitar Ejercicios/Aprender/Ver de la enum,
-      del `NavigationBar` y de las rutas de la barra; dejar Inicio / Analizar / Más.
-- [x] **R2. Reordenar «Más»** — Herramientas (importar, análisis, explorador, editor, reloj),
-      Preferencias y Acerca de; fuera Comunidad, Donaciones y la cuenta. También se quitaron
-      los botones de Donar/Acerca de la pantalla de bienvenida de Inicio.
-- [x] **R3. Ajustar textos y tests** — nueva clave `mobileAnalysisTab` («Análisis» en ES) y tests
-      de navegación/importación/análisis actualizados. `flutter analyze` limpio.
+- [x] **R1. Revertir la navegación a los 5 tabs originales** — `BottomTab` vuelve a ser
+      `home, puzzles, learn, watch, more` (Home/Puzzles/Learn/Watch/More); se quitó la pestaña
+      Análisis, sus `navigator key`/`scroll controller`/interacción. El análisis sigue accesible
+      desde Más → Herramientas y desde la importación (rutas ocultas a la barra).
+- [x] **R2. Adelgazar Home y Más** — Home sin «Donar» ni «Acerca de Lichess…» en la bienvenida;
+      Más con Herramientas (importar, análisis, explorador, editor, reloj), Preferencias (ajustes y
+      datos de importación) y Acerca de; sin Comunidad/Donaciones.
+- [x] **R3. Revisar partida sin login** — oculto el «Solicitar análisis del ordenador» de
+      `server_analysis` (puerta de login): la revisión local de Stockfish corre sin cuenta.
 
 ## 3. Siguiente: caché e importación incremental
 

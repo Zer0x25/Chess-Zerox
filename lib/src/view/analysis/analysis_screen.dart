@@ -624,15 +624,13 @@ class const _BottomBar({
               );
             },
           ),
+        // The cloud computer analysis needs an account, and the analysis is anon-first:
+        // only show the action when the user is signed in.
         if (options case ArchivedGame())
-          if (analysisState.canRequestServerAnalysis)
+          if (analysisState.canRequestServerAnalysis && authUser != null)
             BottomSheetAction(
               makeLabel: (context) => Text(context.l10n.requestAComputerAnalysis),
               onPressed: () {
-                if (authUser == null) {
-                  showSnackBar(context, context.l10n.youNeedAnAccountToDoThat);
-                  return;
-                }
                 ref
                     .read(analysisControllerProvider(options).notifier)
                     .requestServerAnalysis()

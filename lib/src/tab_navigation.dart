@@ -10,15 +10,21 @@ import 'package:material_ui/material_ui.dart';
 
 enum BottomTab() {
   home,
-  analysis,
+  puzzles,
+  learn,
+  watch,
   more;
 
   String label(AppLocalizations strings) {
     switch (this) {
       case BottomTab.home:
         return strings.mobileHomeTab;
-      case BottomTab.analysis:
-        return strings.mobileAnalysisTab;
+      case BottomTab.puzzles:
+        return strings.mobilePuzzlesTab;
+      case BottomTab.learn:
+        return strings.learnMenu;
+      case BottomTab.watch:
+        return strings.mobileWatchTab;
       case BottomTab.more:
         return strings.more;
     }
@@ -28,8 +34,12 @@ enum BottomTab() {
     switch (this) {
       case BottomTab.home:
         return Symbols.home_rounded;
-      case BottomTab.analysis:
-        return Icons.query_stats_outlined;
+      case BottomTab.puzzles:
+        return Symbols.extension_rounded;
+      case BottomTab.watch:
+        return Symbols.live_tv_rounded;
+      case BottomTab.learn:
+        return Symbols.school_rounded;
       case BottomTab.more:
         return Symbols.menu_rounded;
     }
@@ -43,8 +53,12 @@ final currentNavigatorKeyProvider = Provider<GlobalKey<NavigatorState>>((ref) {
   switch (currentTab) {
     case BottomTab.home:
       return homeNavigatorKey;
-    case BottomTab.analysis:
-      return analysisNavigatorKey;
+    case BottomTab.puzzles:
+      return puzzlesNavigatorKey;
+    case BottomTab.learn:
+      return learnNavigatorKey;
+    case BottomTab.watch:
+      return watchNavigatorKey;
     case BottomTab.more:
       return moreNavigatorKey;
   }
@@ -55,28 +69,28 @@ final currentRootScrollControllerProvider = Provider<ScrollController>((ref) {
   switch (currentTab) {
     case BottomTab.home:
       return homeScrollController;
-    case BottomTab.analysis:
-      return analysisScrollController;
+    case BottomTab.puzzles:
+      return puzzlesScrollController;
+    case BottomTab.learn:
+      return learnScrollController;
+    case BottomTab.watch:
+      return watchScrollController;
     case BottomTab.more:
       return moreScrollController;
   }
 });
 
 final homeNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'home');
-final analysisNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'analysis');
-final moreNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'more');
-
-// Kept for the legacy puzzle/learn/watch screens, still reachable through deep links.
 final puzzlesNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'puzzles');
 final learnNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'learn');
 final watchNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'watch');
+final moreNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'more');
 
 final homeScrollController = ScrollController(debugLabel: 'HomeScroll');
-final analysisScrollController = ScrollController(debugLabel: 'AnalysisScroll');
-final moreScrollController = ScrollController(debugLabel: 'MoreScroll');
 final puzzlesScrollController = ScrollController(debugLabel: 'PuzzlesScroll');
 final learnScrollController = ScrollController(debugLabel: 'learnScroll');
 final watchScrollController = ScrollController(debugLabel: 'WatchScroll');
+final moreScrollController = ScrollController(debugLabel: 'MoreScroll');
 
 /// A [NavigatorObserver] that keeps track of the routes currently on the
 /// navigator it observes, so that code can query whether a named route is
@@ -483,11 +497,10 @@ class BottomTabInteraction() extends ChangeNotifier {
 }
 
 final homeTabInteraction = BottomTabInteraction();
-final analysisTabInteraction = BottomTabInteraction();
-final moreTabInteraction = BottomTabInteraction();
 final puzzlesTabInteraction = BottomTabInteraction();
 final learnTabInteraction = BottomTabInteraction();
 final watchTabInteraction = BottomTabInteraction();
+final moreTabInteraction = BottomTabInteraction();
 
 class const MainTabScaffoldProperties({
   required super.child,
