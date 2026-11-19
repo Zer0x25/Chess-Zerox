@@ -14,6 +14,9 @@ import 'package:lichess_mobile/src/model/engine/evaluation_preferences.dart';
 import 'package:lichess_mobile/src/model/engine/position_evaluator.dart';
 import 'package:lichess_mobile/src/model/engine/work.dart';
 import 'package:lichess_mobile/src/model/review/game_review.dart';
+import 'package:logging/logging.dart';
+
+final _logger = Logger('GameReview');
 
 /// Time spent on each position of a first-pass review.
 ///
@@ -50,14 +53,6 @@ class GameReviewController(final AnalysisOptions options) extends AsyncNotifier<
     final analysisState = ref.read(analysisControllerProvider(options)).requireValue;
     final mainline = analysisState.root.mainline.toList(growable: false);
 
-    // The analysis screen and the review share the same engine. Stop the interactive evaluator so
-    // its searches cannot supersede ours (and ours cannot make the board flicker).
-    try {
-      ref.read(positionEvaluatorProvider(analysisState.evaluationContext).notifier).release();
-    } catch (_) {
-      // The analysis evaluator may not have been started yet.
-    }
-
     if (mainline.isEmpty) {
       return GameReviewState(
         status: .done,
@@ -65,12 +60,10 @@ class GameReviewController(final AnalysisOptions options) extends AsyncNotifier<
       );
     }
 
-    final context = EvaluationContext(
-      id: StringId('review-${options.contextId.value}'),
-      variant: analysisState.variant,
-      initialPosition: analysisState.root.position,
-      enginePref: analysisState.evaluationContext.enginePref,
-    );
+    // Reuse the analysis board's evaluator. Its engine is already running; a separate context
+    // would have to acquire the same shared engine, and releasing the analysis evaluator first
+    // makes it quit before the new one can attach.
+    final context = analysisState.evaluationContext;
     _evaluator = ref.read(positionEvaluatorProvider(context).notifier);
 
     unawaited(_run(mainline: mainline, analysisState: analysisState, context: context));
@@ -210,6 +203,7 @@ class GameReviewController(final AnalysisOptions options) extends AsyncNotifier<
     await _subscription?.cancel();
     _subscription = null;
 
+    _logger.info('Evaluated ${work.id.value}: ${result != null ? 'ok' : 'no result'}');
     if (_cancelled || !ref.mounted) return null;
     return result;
   }
