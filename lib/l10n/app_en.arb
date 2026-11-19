@@ -96,6 +96,17 @@
   "mobileImportByUsername": "Import public games by username",
   "mobileImportPgnSubtitle": "Paste a PGN or open a file",
   "mobileImportDisclaimer": "Games are fetched from the public Lichess and Chess.com APIs. This app is not affiliated with either platform.",
+  "mobileImportCount": "Games to import",
+  "mobileImportUpdate": "Update",
+  "mobileImportNewGames": "{param} new games",
+  "@mobileImportNewGames": {
+    "placeholders": {
+      "param": {
+        "type": "String"
+      }
+    }
+  },
+  "mobileImportNoNewGames": "No new games",
   "mobileImportFromLichess": "Import from Lichess",
   "mobileImportFromChessCom": "Import from Chess.com",
   "mobileImportUsername": "Username",

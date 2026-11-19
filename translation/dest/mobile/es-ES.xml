@@ -47,6 +47,10 @@
   <string name="importNoGamesLichess" comment="Empty state message before searching for Lichess games.">Introduce un nombre de usuario de Lichess para ver sus últimas partidas públicas.</string>
   <string name="importNoGamesChessCom" comment="Empty state message before searching for Chess.com games.">Introduce un nombre de usuario de Chess.com para ver sus últimas partidas públicas.</string>
   <string name="importRetry" comment="Button retrying a failed game import search. Should be short.">Reintentar</string>
+  <string name="importCount" comment="Label of the selector that chooses how many games to import at once.">Partidas a importar</string>
+  <string name="importUpdate" comment="Button that refreshes the saved games of a username, importing only newer ones.">Actualizar</string>
+  <string name="importNewGames" comment="Feedback after importing games. %s is the number of newly saved games.">%s partidas nuevas</string>
+  <string name="importNoNewGames" comment="Feedback after an update finds no newer games than the ones already saved.">No hay partidas nuevas</string>
   <string name="importNoGamesFound" comment="Title of the empty state when a player has no importable games.">No se encontraron partidas</string>
   <string name="importNoStandardGames" comment="Message when a player has no recent public standard chess games.">Este jugador no tiene partidas estándar públicas recientes.</string>
   <string name="importEnterUsername" comment="Error shown when the username field is empty.">Introduce primero un nombre de usuario.</string>

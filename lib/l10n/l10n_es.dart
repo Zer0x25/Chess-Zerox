@@ -196,6 +196,20 @@ class AppLocalizationsEs extends AppLocalizations {
   String get mobileImportDisclaimer => 'Las partidas se obtienen de las APIs públicas de Lichess y Chess.com. Esta app no está afiliada a ninguna de las dos plataformas.';
 
   @override
+  String get mobileImportCount => 'Partidas a importar';
+
+  @override
+  String get mobileImportUpdate => 'Actualizar';
+
+  @override
+  String mobileImportNewGames(String param) {
+    return '$param partidas nuevas';
+  }
+
+  @override
+  String get mobileImportNoNewGames => 'No hay partidas nuevas';
+
+  @override
   String get mobileImportFromLichess => 'Importar desde Lichess';
 
   @override

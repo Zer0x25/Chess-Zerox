@@ -68,8 +68,12 @@ Según `CACHE_Y_MARCA.md`:
 
 - [x] **R4. Migración sqflite + `ImportedGameStore`** — base de datos v10 con tablas
       `import_sources` e `imported_games`, cursor por fuente/usuario, tests sin red (7 tests).
-- [ ] **R5. Conectar la pantalla de importación al almacén** — listar guardadas, cursor
-      `last_played_at`, mostrar «N partidas nuevas», botón Actualizar y elegir 10/30/100.
+- [x] **R5. Conectar la pantalla de importación al almacén** — la búsqueda guarda las partidas con
+      PGN, filtra por el cursor `last_played_at`, muestra «N partidas nuevas» / «No hay partidas
+      nuevas», el botón pasa a «Actualizar» y se puede elegir 10/30/100. Test de importar y
+      actualizar sin duplicados.
+  - Limitación conocida: el cursor evita guardar duplicados, pero las APIs siguen consultando el
+    mismo número de partidas; el ahorro de tráfico total queda para el siguiente paso.
 - [ ] **R6. Preferencias de datos** — borrar usuarios/partidas guardadas desde «Más».
 
 ## 4. Después: rebrand técnico (requiere decisiones del usuario)

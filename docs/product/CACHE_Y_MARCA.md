@@ -78,10 +78,12 @@ imported_games(
 - Las peticiones siguen siendo seriales y con `User-Agent` propio; el cursor reduce el tráfico
   todavía más.
 
-## Próximo trabajo
+## Estado (noviembre de 2026)
 
-1. Migración sqflite y repositorio `ImportedGameStore` con tests (sin red).
-2. Conectar `UsernameImportScreen` al almacén: listar lo guardado, mostrar «N partidas nuevas» y
-   botón de actualización.
-3. Ajustes para borrar usuarios/partidas guardadas y elegir el número de partidas.
-4. Solo después: rebrand técnico completo y decisión sobre Firebase/OAuth.
+1. ✅ Migración sqflite v10 y repositorio `ImportedGameStore` con tests (sin red).
+2. ✅ `UsernameImportScreen` conectada al almacén: guarda PGN, usa el cursor, avisa de las partidas
+   nuevas, ofrece «Actualizar» y permite elegir 10/30/100.
+3. Pendiente: ajustes para borrar usuarios/partidas guardadas (R6).
+4. Pendiente: pasar el cursor a la API (`since` en Lichess, meses desde el cursor en Chess.com) para
+   reducir también el tráfico, no solo los duplicados guardados.
+5. Solo después: rebrand técnico completo y decisión sobre Firebase/OAuth.

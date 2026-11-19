@@ -3,6 +3,7 @@ import 'package:lichess_mobile/src/model/common/id.dart';
 import 'package:lichess_mobile/src/model/import/chesscom_client.dart';
 import 'package:lichess_mobile/src/model/import/import_providers.dart';
 import 'package:lichess_mobile/src/model/import/imported_game.dart';
+import 'package:lichess_mobile/src/model/import/imported_game_store.dart';
 import 'package:lichess_mobile/src/styles/styles.dart';
 import 'package:lichess_mobile/src/utils/l10n_context.dart';
 import 'package:lichess_mobile/src/utils/navigation.dart';
@@ -23,9 +24,14 @@ class const UsernameImportScreen({required final ImportSource source, super.key}
 }
 
 class _UsernameImportScreenState() extends ConsumerState<UsernameImportScreen> {
+  static const _limitChoices = [10, 30, 100];
+
   final _controller = TextEditingController();
   Future<List<ImportedGame>>? _future;
   String? _openingGameId;
+  String? _username;
+  int _limit = 30;
+  bool _searching = false;
 
   @override
   void dispose() {
@@ -33,7 +39,7 @@ class _UsernameImportScreenState() extends ConsumerState<UsernameImportScreen> {
     super.dispose();
   }
 
-  void _search() {
+  Future<void> _search() async {
     final username = _controller.text.trim();
     if (username.isEmpty) {
       showSnackBar(context, context.l10n.mobileImportEnterUsername, type: .error);
@@ -41,16 +47,49 @@ class _UsernameImportScreenState() extends ConsumerState<UsernameImportScreen> {
     }
 
     FocusScope.of(context).unfocus();
-    final future = switch (widget.source) {
-      .lichess => ref.read(importRepositoryProvider).fetchLichessGames(username),
-      .chessCom => ref.read(chessComClientProvider).fetchRecentGames(username),
-    };
-    // The future may fail before the first build subscribes to it through the future builder,
-    // which the framework would report as an unhandled error.
-    future.ignore();
-    setState(() {
-      _future = future;
-    });
+    setState(() => _searching = true);
+    try {
+      final store = await ref.read(importedGameStoreProvider.future);
+      final cursor = await store.cursorFor(widget.source, username);
+      final fetched = switch (widget.source) {
+        .lichess =>
+          await ref.read(importRepositoryProvider).fetchLichessGames(username, max: _limit),
+        .chessCom => await ref.read(chessComClientProvider).fetchRecentGames(username, max: _limit),
+      };
+      final newer = fetched
+          .where((game) {
+            final playedAt = game.playedAt;
+            return playedAt == null || cursor == null || playedAt.isAfter(cursor);
+          })
+          .toList(growable: false);
+      final newCount = await store.insertGames(
+        source: widget.source,
+        username: username,
+        games: newer,
+      );
+      final saved = await store.listGames(source: widget.source, username: username, limit: _limit);
+      if (!mounted) return;
+      setState(() {
+        _username = username;
+        _future = Future.value(saved);
+      });
+      showSnackBar(
+        context,
+        newCount == 0
+            ? context.l10n.mobileImportNoNewGames
+            : context.l10n.mobileImportNewGames('$newCount'),
+      );
+    } catch (error) {
+      if (!mounted) return;
+      // The future may fail before the first build subscribes to it through the future builder.
+      final future = Future<List<ImportedGame>>.error(error);
+      future.ignore();
+      setState(() {
+        _future = future;
+      });
+    } finally {
+      if (mounted) setState(() => _searching = false);
+    }
   }
 
   Future<void> _openGame(ImportedGame game) async {
@@ -113,9 +152,37 @@ class _UsernameImportScreenState() extends ConsumerState<UsernameImportScreen> {
                   ),
                   const SizedBox(height: 12),
                   FilledButton.icon(
-                    onPressed: _openingGameId == null ? _search : null,
+                    onPressed: _openingGameId == null && !_searching ? _search : null,
                     icon: const Icon(Icons.search),
-                    label: Text(context.l10n.mobileImportSearchGames),
+                    label: Text(
+                      _username == null
+                          ? context.l10n.mobileImportSearchGames
+                          : context.l10n.mobileImportUpdate,
+                    ),
+                  ),
+                  if (_searching)
+                    const Padding(
+                      padding: EdgeInsets.only(top: 8),
+                      child: LinearProgressIndicator(),
+                    ),
+                  const SizedBox(height: 8),
+                  Row(
+                    children: [
+                      Text(context.l10n.mobileImportCount),
+                      const SizedBox(width: 12),
+                      DropdownButton<int>(
+                        value: _limit,
+                        items: [
+                          for (final choice in _limitChoices)
+                            DropdownMenuItem(value: choice, child: Text('$choice')),
+                        ],
+                        onChanged: _searching
+                            ? null
+                            : (value) {
+                                if (value != null) setState(() => _limit = value);
+                              },
+                      ),
+                    ],
                   ),
                   const SizedBox(height: 8),
                   Text(

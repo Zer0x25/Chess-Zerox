@@ -59,6 +59,10 @@
   <string name="importByUsername" comment="Subtitle of the Lichess and Chess.com import options.">Import public games by username</string>
   <string name="importPgnSubtitle" comment="Subtitle of the PGN import option.">Paste a PGN or open a file</string>
   <string name="importDisclaimer" comment="Disclaimer shown at the bottom of the import screen.">Games are fetched from the public Lichess and Chess.com APIs. This app is not affiliated with either platform.</string>
+  <string name="importCount" comment="Label of the selector that chooses how many games to import at once.">Games to import</string>
+  <string name="importUpdate" comment="Button that refreshes the saved games of a username, importing only newer ones.">Update</string>
+  <string name="importNewGames" comment="Feedback after importing games. %s is the number of newly saved games.">%s new games</string>
+  <string name="importNoNewGames" comment="Feedback after an update finds no newer games than the ones already saved.">No new games</string>
   <string name="importFromLichess" comment="Title of the screen that lists public Lichess games by username.">Import from Lichess</string>
   <string name="importFromChessCom" comment="Title of the screen that lists public Chess.com games by username.">Import from Chess.com</string>
   <string name="importUsername" comment="Label of the username field when importing games.">Username</string>

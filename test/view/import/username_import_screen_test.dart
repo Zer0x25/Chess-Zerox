@@ -88,6 +88,24 @@ void main() {
     expect(find.textContaining('rapid'), findsOneWidget);
   });
 
+  testWidgets('saves games locally and updates without duplicating them', (tester) async {
+    await _pumpScreen(tester, client: _mockChessCom());
+
+    await tester.enterText(find.byType(TextField), 'hikaru');
+    await tester.tap(find.text('Search games'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Hikaru vs Rival'), findsOneWidget);
+    expect(find.text('Games to import'), findsOneWidget);
+    expect(find.text('Update'), findsOneWidget);
+
+    await tester.tap(find.text('Update'));
+    await tester.pumpAndSettle();
+
+    // The second search must not duplicate the game already saved locally.
+    expect(find.text('Hikaru vs Rival'), findsOneWidget);
+  });
+
   testWidgets('opens a listed game in the analysis board', (tester) async {
     await _pumpScreen(
       tester,

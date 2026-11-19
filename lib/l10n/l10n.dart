@@ -550,6 +550,30 @@ abstract class AppLocalizations {
   /// **'Games are fetched from the public Lichess and Chess.com APIs. This app is not affiliated with either platform.'**
   String get mobileImportDisclaimer;
 
+  /// No description provided for @mobileImportCount.
+  ///
+  /// In en, this message translates to:
+  /// **'Games to import'**
+  String get mobileImportCount;
+
+  /// No description provided for @mobileImportUpdate.
+  ///
+  /// In en, this message translates to:
+  /// **'Update'**
+  String get mobileImportUpdate;
+
+  /// No description provided for @mobileImportNewGames.
+  ///
+  /// In en, this message translates to:
+  /// **'{param} new games'**
+  String mobileImportNewGames(String param);
+
+  /// No description provided for @mobileImportNoNewGames.
+  ///
+  /// In en, this message translates to:
+  /// **'No new games'**
+  String get mobileImportNoNewGames;
+
   /// No description provided for @mobileImportFromLichess.
   ///
   /// In en, this message translates to:

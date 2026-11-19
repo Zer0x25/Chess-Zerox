@@ -196,6 +196,20 @@ class AppLocalizationsZh extends AppLocalizations {
   String get mobileImportDisclaimer => 'Games are fetched from the public Lichess and Chess.com APIs. This app is not affiliated with either platform.';
 
   @override
+  String get mobileImportCount => 'Games to import';
+
+  @override
+  String get mobileImportUpdate => 'Update';
+
+  @override
+  String mobileImportNewGames(String param) {
+    return '$param new games';
+  }
+
+  @override
+  String get mobileImportNoNewGames => 'No new games';
+
+  @override
   String get mobileImportFromLichess => 'Import from Lichess';
 
   @override
