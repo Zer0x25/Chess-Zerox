@@ -29,6 +29,7 @@
   "mobileCustomizeHomeTip": "Consejo: ¡Puedes añadir más componentes a la pantalla de inicio o eliminar aquellos que no necesitas!",
   "mobileCustomizeHomeTipDismiss": "Descartar",
   "mobileImportGame": "Importar partida",
+  "mobileImportGameSubtitle": "Lichess, Chess.com o PGN",
   "mobileImportSources": "Fuentes",
   "mobileImportLocal": "Local",
   "mobileImportByUsername": "Importar partidas públicas por nombre de usuario",

@@ -30,6 +30,7 @@
   <string name="customizeHomeTip" comment="Shown in a widget on the home screen to let the user know that they can customize their homescreen">Consejo: ¡Puedes añadir más componentes a la pantalla de inicio o eliminar aquellos que no necesitas!</string>
   <string name="customizeHomeTipDismiss" comment="Hides the widget to customize the home screen.">Descartar</string>
   <string name="importGame" comment="Title of the Chess Zerox screen that lets the user import a game from Lichess, Chess.com or a PGN.">Importar partida</string>
+  <string name="importGameSubtitle" comment="Subtitle of the import entry in the More tab.">Lichess, Chess.com o PGN</string>
   <string name="importSources" comment="Section header listing the online sources a game can be imported from.">Fuentes</string>
   <string name="importLocal" comment="Section header for importing a PGN stored on the device.">Local</string>
   <string name="importByUsername" comment="Subtitle of the Lichess and Chess.com import options.">Importar partidas públicas por nombre de usuario</string>

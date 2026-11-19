@@ -508,6 +508,12 @@ abstract class AppLocalizations {
   /// **'Import game'**
   String get mobileImportGame;
 
+  /// No description provided for @mobileImportGameSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Lichess, Chess.com or PGN'**
+  String get mobileImportGameSubtitle;
+
   /// No description provided for @mobileImportSources.
   ///
   /// In en, this message translates to:

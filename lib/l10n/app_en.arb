@@ -89,6 +89,7 @@
   },
   "mobileInvalidOrExpiredLoginCode": "This code is invalid or has expired.",
   "mobileImportGame": "Import game",
+  "mobileImportGameSubtitle": "Lichess, Chess.com or PGN",
   "mobileImportSources": "Sources",
   "mobileImportLocal": "Local",
   "mobileImportByUsername": "Import public games by username",

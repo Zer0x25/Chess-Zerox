@@ -175,6 +175,9 @@ class AppLocalizationsAf extends AppLocalizations {
   String get mobileImportGame => 'Import game';
 
   @override
+  String get mobileImportGameSubtitle => 'Lichess, Chess.com or PGN';
+
+  @override
   String get mobileImportSources => 'Sources';
 
   @override

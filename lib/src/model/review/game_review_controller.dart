@@ -20,6 +20,12 @@ import 'package:lichess_mobile/src/model/review/game_review.dart';
 /// Deliberately short: the report is a guide, and a long batch would keep the board hostage.
 const _kSearchTime = Duration(milliseconds: 900);
 
+/// How long the engine must stay silent before we accept its last reported evaluation.
+const _kResultQuietPeriod = Duration(milliseconds: 500);
+
+/// Safety net so a stuck engine can never keep the review waiting forever.
+const _kSearchTimeout = Duration(seconds: 4);
+
 final gameReviewControllerProvider = AsyncNotifierProvider.autoDispose
     .family<GameReviewController, GameReviewState, AnalysisOptions>(
       GameReviewController.new,
@@ -172,13 +178,39 @@ class GameReviewController(final AnalysisOptions options) extends AsyncNotifier<
       steps: steps,
     );
 
+    // The evaluator's result stream is a broadcast stream that stays open for the lifetime of the
+    // evaluator, so it never completes on its own. Wait instead until the engine stops reporting
+    // results for this position (the evaluator emits a final result when `bestmove` arrives).
     LocalEval? result;
+    final finished = Completer<void>();
+    Timer? quietTimer;
+    Timer? hardTimer;
+
+    void finish() {
+      if (finished.isCompleted) return;
+      quietTimer?.cancel();
+      hardTimer?.cancel();
+      finished.complete();
+    }
+
+    void scheduleFinish() {
+      quietTimer?.cancel();
+      quietTimer = Timer(_kResultQuietPeriod, finish);
+    }
+
     await _subscription?.cancel();
-    final stream = evaluator.evaluate(work);
-    _subscription = stream.listen((value) => result = value.$2);
-    await _subscription!.asFuture<void>();
+    _subscription = evaluator.evaluate(work).listen((value) {
+      if (value.$1 == work) {
+        result = value.$2;
+        scheduleFinish();
+      }
+    }, onError: (_) => finish());
+    hardTimer = Timer(_kSearchTimeout, finish);
+    await finished.future;
+    await _subscription?.cancel();
     _subscription = null;
-    if (_cancelled) return null;
+
+    if (_cancelled || !ref.mounted) return null;
     return result;
   }
 

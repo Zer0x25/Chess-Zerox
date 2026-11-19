@@ -175,6 +175,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get mobileImportGame => 'Importar partida';
 
   @override
+  String get mobileImportGameSubtitle => 'Lichess, Chess.com o PGN';
+
+  @override
   String get mobileImportSources => 'Fuentes';
 
   @override

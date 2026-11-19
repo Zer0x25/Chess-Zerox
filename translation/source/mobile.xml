@@ -52,6 +52,7 @@
   <string name="ifAccountMatchesCodeSent" comment="Shown after requesting an email login code. %1$s is the email address, %2$s is the code length.">If an account matches %1$s, a %2$s character code was sent to it. Check your inbox and enter the code below.</string>
   <string name="invalidOrExpiredLoginCode" comment="Error shown when an email login code is wrong or expired.">This code is invalid or has expired.</string>
   <string name="importGame" comment="Title of the Chess Zerox screen that lets the user import a game from Lichess, Chess.com or a PGN.">Import game</string>
+  <string name="importGameSubtitle" comment="Subtitle of the import entry in the More tab.">Lichess, Chess.com or PGN</string>
   <string name="importSources" comment="Section header listing the online sources a game can be imported from.">Sources</string>
   <string name="importLocal" comment="Section header for importing a PGN stored on the device.">Local</string>
   <string name="importByUsername" comment="Subtitle of the Lichess and Chess.com import options.">Import public games by username</string>

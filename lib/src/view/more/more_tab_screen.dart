@@ -80,8 +80,8 @@ class const _Body() extends ConsumerWidget {
                 trailing: Theme.of(context).platform == TargetPlatform.iOS
                     ? const CupertinoListTileChevron()
                     : null,
-                title: const Text('Import game'),
-                subtitle: const Text('Lichess, Chess.com or PGN'),
+                title: Text(context.l10n.mobileImportGame),
+                subtitle: Text(context.l10n.mobileImportGameSubtitle),
                 onTap: () => Navigator.of(context).push(ImportHubScreen.buildRoute()),
               ),
               ListTile(
