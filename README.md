@@ -106,6 +106,7 @@ Fuera del MVP: jugar online, torneos, social, detección de trampas, análisis e
 - [Plan de producto y roadmap](docs/product/PLAN.md)
 - [Arquitectura técnica](docs/product/ARQUITECTURA.md)
 - [Importación desde Lichess y Chess.com](docs/product/IMPORTACION.md)
+- [Referencias de UX](docs/product/UX_REFERENCIAS.md)
 - [Licencias, marcas y cumplimiento](docs/product/LEGAL.md)
 - [README original de Lichess Mobile](docs/upstream/README.md) (base del fork)
 
