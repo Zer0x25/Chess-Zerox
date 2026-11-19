@@ -1,6 +1,7 @@
 import 'package:dartchess/dartchess.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
 import 'package:lichess_mobile/src/model/common/id.dart';
 import 'package:lichess_mobile/src/model/game/exported_game.dart';
@@ -148,6 +149,29 @@ void main() {
 
       expect(result, isA<ExportedGame>());
       expect(result.steps[0].position is ThreeCheck, true);
+    });
+  });
+
+  group('GameRepository.getGamePgn', () {
+    test('downloads the raw PGN with the PGN accept header', () async {
+      const pgn = '[Event "Test"]\n[Result "1-0"]\n\n1. e4 e5 1-0';
+      final requests = <http.Request>[];
+      final mockClient = MockClient((request) {
+        requests.add(request);
+        if (request.url.path == '/game/export/qVChCOTc') {
+          return mockResponse(pgn, 200);
+        }
+        return mockResponse('', 404);
+      });
+
+      final container = await lichessClientContainer(mockClient);
+      final result = await container
+          .read(gameRepositoryProvider)
+          .getGamePgn(const GameId('qVChCOTc'));
+
+      expect(result, pgn);
+      expect(requests.single.headers['Accept'], 'application/x-chess-pgn');
+      expect(requests.single.url.query, isEmpty);
     });
   });
 }
