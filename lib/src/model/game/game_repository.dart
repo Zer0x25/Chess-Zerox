@@ -55,6 +55,17 @@ class const GameRepository(
     await client.postRead(Uri(path: '/game/$id/request-analysis'));
   }
 
+  /// Fetches the raw PGN of a game.
+  ///
+  /// Unlike [getGame], this keeps the original PGN tags and comments. It is used when a game is
+  /// imported into the analysis board, where the PGN is the source of truth.
+  Future<String> getGamePgn(GameId id) {
+    return client.read(
+      Uri(path: '/game/export/$id'),
+      headers: {'Accept': 'application/x-chess-pgn'},
+    );
+  }
+
   Future<IList<LightExportedGameWithPov>> getUserGames(
     UserId userId, {
     int max = 20,

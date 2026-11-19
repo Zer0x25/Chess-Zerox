@@ -1,71 +1,116 @@
-# Lichess Mobile
+# Chess Zerox
 
-Second iteration of the [Lichess mobile app](https://lichess.org/mobile).
+**Analizador y entrenador de ajedrez para Android, gratuito y open source.**
 
-## How to contribute
+> Nombre provisional. Estado: fork de Lichess Mobile en desarrollo; la primera vertical (importar
+> una partida de Lichess o Chess.com y abrirla en el tablero de análisis) ya está implementada.
 
-Contributions to this project are welcome!
+## Estado actual
 
-If you want to contribute, please read the [contributing guide](./CONTRIBUTING.md).
+La base es un fork de [lichess-org/mobile](https://github.com/lichess-org/mobile) (GPLv3), sin
+modificar su motor de ajedrez ni su tablero. Sobre esa base ya funciona:
 
-If you are new to this project, you can [read the documentation](./docs) to get
-started. The [AGENTS.md](./AGENTS.md) is also a good resource to understand the
-codebase.
+- Pantalla **Importar partida** (Más → Import game) con tres fuentes: Lichess, Chess.com y PGN.
+- Listado de partidas públicas por usuario de Lichess, reutilizando el cliente y los repositorios
+  existentes.
+- Cliente de la **Published-Data API de Chess.com**: peticiones en serie, `User-Agent` propio,
+  caché en memoria de 12 horas y revalidación con `ETag`/`Last-Modified`.
+- Apertura de cualquier partida importada en el **tablero de análisis** existente, con evaluación
+  local de Stockfish 18 NNUE y navegación por la partida.
+- Tests de unidad del cliente de Chess.com y tests de widget del flujo de importación, sin llamadas
+  reales a las APIs.
 
-## Setup
+Pendiente para las siguientes verticales: informe de precisión y clasificación de jugadas,
+entrenamiento de errores, rebranding completo (iconos, `applicationId`, OAuth de Lichess) y
+sustituir Firebase por una configuración propia o desactivarlo.
 
-tl;dr: Install Flutter, clone the repo, run in order:
-- `flutter pub get`
-- `dart run build_runner watch`
-- `flutter analyze --watch`
-
-and you're ready to code!
-
-See [the dev environment docs](./docs/setting_dev_env.md) for detailed instructions.
-
-## Running the app
-
-To run the app, you can use the following command:
+### Ejecutar en desarrollo
 
 ```bash
-# if not already done, run the code generation
+flutter pub get
 dart run build_runner build
 
-# run the app on all available devices
-flutter run -d all
+# La app usa lichess.dev por defecto. Para importar partidas reales de Lichess:
+flutter run \
+  --dart-define=LICHESS_HOST=lichess.org \
+  --dart-define=LICHESS_WS_HOST=socket.lichess.org
+
+# Tests de la vertical de importación
+flutter test test/model/import test/view/import
 ```
 
-### Previewing the platform designs
+## La idea en una frase
 
-To check the iOS and Android designs on any device, run the app in device preview:
+Importa tus partidas de Lichess y Chess.com (o un PGN), analízalas en el teléfono con Stockfish 18 NNUE y recibe un informe claro: precisión, errores, mejores jugadas y ejercicios para no repetir los mismos fallos.
 
-```bash
-flutter run -t lib/device_preview_main.dart
-```
+No queremos competir con Lichess ni con Chess.com. Queremos ser la capa de análisis y entrenamiento que hoy está detrás de un muro de pago o dispersa entre plataformas.
 
-See [Device preview](./docs/setting_dev_env.md#device-preview) for how to use it and its
-limitations.
+## Por qué esta base y no empezar de cero
 
-## Running tests
+La app [lichess-org/mobile](https://github.com/lichess-org/mobile) ya trae, en Flutter y GPLv3:
 
-To run the tests, you can use the following command:
+- Tablero, editor de posiciones y análisis interactivo.
+- Stockfish 18 con redes NNUE, ejecutándose en el dispositivo.
+- Explorador de aperturas, tabla de finales y análisis de servidor de Lichess.
+- Importación de PGN, modo "aprende de tus errores", temas, i18n y accesibilidad.
+- Cliente de la API de Lichess con OAuth PKCE, caché y manejo de límites.
 
-```bash
-# if not already done, run the code generation
-dart run build_runner build
+Eso es aproximadamente el 60-70 % de un analizador. Lo que falta para el producto que quieres es concreto:
 
-flutter test
-```
+1. Importar partidas de Chess.com y unificarlas con las de Lichess.
+2. Generar un **informe completo de partida para cualquier PGN**, no solo para partidas archivadas de Lichess.
+3. Clasificar cada jugada y explicar los errores en español.
+4. Convertir los errores en ejercicios y repaso espaciado.
+5. Una capa visual propia, clara y atractiva, inspirada en la experiencia de Chess.com pero sin copiar sus assets, nombres ni diseño.
 
-## Internationalisation
+## Qué aporta frente a Lichess y Chess.com
 
-Do not edit the files in `translation/` folder (except `translation/source/mobile.xml`), nor the `app_en.arb` file: these files are generated.
-For more information, see [Internationalisation](./docs/internationalisation.md).
+| Necesidad | Lichess | Chess.com | Chess Zerox |
+|---|---|---|---|
+| Análisis con motor fuerte | Sí, gratis | Sí, revisión completa de pago | Local y gratis, con modo profundo |
+| Importar desde la otra plataforma | No | No | Lichess + Chess.com + PGN |
+| Funciona sin cuenta | Sí | Limitado | Sí |
+| Funciona sin conexión | Parcial | No | Sí, el motor es local |
+| Explicaciones en español | Interfaz traducida | De pago | Entrenador con texto en español |
+| Entrenar tus errores | Por partida | De pago | Base de errores + repaso espaciado |
+| Código abierto | Sí | No | Sí, GPLv3 |
 
-## Releasing
+La diferencia no es "un motor más fuerte". Lichess ya usa Stockfish de primer nivel en servidor. La diferencia es **aprovechar ese análisis para enseñar**: clasificar, explicar, priorizar y convertir los errores en práctica.
 
-Only for members of lichess team.
+## Alcance del MVP
 
-1. Bump the pubspec.yaml version number. This can be in a PR making a change or a separate PR. Use semantic versioning to determine which part to increment. The version number after the + should also be incremented. For example 0.3.3+000303 with a patch should become 0.3.4+000304.
-2. Run workflow [Deploy to Play Store](https://github.com/lichess-org/mobile/actions/workflows/deploy_play_store.yml)
-3. [Publish on F-Droid](./docs/publish_fdroid.md)
+- Importar las últimas N partidas por usuario de Lichess y Chess.com.
+- Importar PGN/FEN y compartir una partida desde otra app.
+- Revisión local de una partida completa con progreso y cancelación.
+- Informe: precisión, ACPL, gráfico de evaluación, clasificación de jugadas y momentos clave.
+- Tablero con barra de evaluación, flecha de la mejor jugada y navegación por la lista de movimientos.
+- Entrenamiento de los errores de la partida.
+- Caché de informes y modo offline.
+- Español e inglés; el resto de idiomas se hereda de Lichess.
+
+Fuera del MVP: jugar online, torneos, social, detección de trampas, análisis en la nube propio, clone visual de Chess.com.
+
+## Stack
+
+- **Flutter 3.50 / Dart 3.14** (fork de Lichess Mobile).
+- **Stockfish 18 NNUE** mediante `multistockfish`, el motor que ya usa la app.
+- **dartchess** para reglas, PGN y variantes.
+- **chessground** para el tablero.
+- **Riverpod** para estado.
+- **sqflite** para caché local.
+- **fl_chart** para el gráfico de evaluación.
+- **API oficial de Lichess** y **Published-Data API de Chess.com**. Nada de endpoints internos ni scraping.
+
+## Documentos
+
+- [Plan de producto y roadmap](docs/product/PLAN.md)
+- [Arquitectura técnica](docs/product/ARQUITECTURA.md)
+- [Importación desde Lichess y Chess.com](docs/product/IMPORTACION.md)
+- [Licencias, marcas y cumplimiento](docs/product/LEGAL.md)
+- [README original de Lichess Mobile](docs/upstream/README.md) (base del fork)
+
+## Aviso legal
+
+Este proyecto no está afiliado, patrocinado ni respaldado por Lichess ni por Chess.com. "Lichess" y "Chess.com" son marcas de sus respectivos titulares y se usan únicamente para indicar compatibilidad.
+
+El fork de Lichess Mobile está bajo **GNU GPLv3**. Si distribuyes la app, debes publicar el código fuente correspondiente y conservar las licencias y avisos. Lee [docs/product/LEGAL.md](docs/product/LEGAL.md) antes de publicar.

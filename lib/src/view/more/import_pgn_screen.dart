@@ -28,7 +28,7 @@ class const ImportPgnScreen({super.key}) extends StatelessWidget {
     return buildScreenRoute(screen: const ImportPgnScreen());
   }
 
-  static void handlePgnText(BuildContext context, String text) {
+  static void handlePgnText(BuildContext context, String text, {StringId? id}) {
     try {
       final games = PgnGame.parseMultiGameLazy(text);
 
@@ -44,7 +44,7 @@ class const ImportPgnScreen({super.key}) extends StatelessWidget {
         Navigator.of(context).pushHidingTabBar(
           AnalysisScreen.buildRoute(
             AnalysisOptions.pgn(
-              id: const StringId('pgn_import_single_game'),
+              id: id ?? const StringId('pgn_import_single_game'),
               orientation: .white,
               pgn: text,
               isComputerAnalysisAllowed: true,

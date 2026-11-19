@@ -18,8 +18,8 @@ import 'package:lichess_mobile/src/view/analysis/analysis_screen.dart';
 import 'package:lichess_mobile/src/view/board_editor/board_editor_screen.dart';
 import 'package:lichess_mobile/src/view/clock/clock_tool_screen.dart';
 import 'package:lichess_mobile/src/view/explorer/opening_explorer_screen.dart';
+import 'package:lichess_mobile/src/view/import/import_hub_screen.dart';
 import 'package:lichess_mobile/src/view/message/contacts_screen.dart';
-import 'package:lichess_mobile/src/view/more/import_pgn_screen.dart';
 import 'package:lichess_mobile/src/view/relation/friend_screen.dart';
 import 'package:lichess_mobile/src/view/settings/settings_screen.dart';
 import 'package:lichess_mobile/src/view/team/team_updates_screen.dart';
@@ -80,8 +80,9 @@ class const _Body() extends ConsumerWidget {
                 trailing: Theme.of(context).platform == TargetPlatform.iOS
                     ? const CupertinoListTileChevron()
                     : null,
-                title: Text(context.l10n.importPgn),
-                onTap: () => Navigator.of(context).push(ImportPgnScreen.buildRoute()),
+                title: const Text('Import game'),
+                subtitle: const Text('Lichess, Chess.com or PGN'),
+                onTap: () => Navigator.of(context).push(ImportHubScreen.buildRoute()),
               ),
               ListTile(
                 leading: const Icon(Icons.biotech_outlined),
