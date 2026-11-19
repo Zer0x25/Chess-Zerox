@@ -31,6 +31,7 @@ import 'package:lichess_mobile/src/view/engine/engine_lines.dart';
 import 'package:lichess_mobile/src/view/explorer/explorer_view.dart';
 import 'package:lichess_mobile/src/view/game/exported_game_title.dart';
 import 'package:lichess_mobile/src/view/game/game_common_widgets.dart';
+import 'package:lichess_mobile/src/view/review/game_review_screen.dart';
 import 'package:lichess_mobile/src/view/study/add_pgn_to_study_screen.dart';
 import 'package:lichess_mobile/src/view/tournament/tournament_screen.dart';
 import 'package:lichess_mobile/src/view/user/user_or_profile_screen.dart';
@@ -161,6 +162,14 @@ class _AnalysisScreenState() extends ConsumerState<_AnalysisScreen> {
                       label: context.l10n.mobileShare,
                       onPressed: null,
                       submenu: shareActions,
+                    ),
+                  if (value.isComputerAnalysisAllowed)
+                    ContextMenuAction(
+                      icon: Icons.query_stats_outlined,
+                      label: context.l10n.mobileReviewStart,
+                      onPressed: () =>
+                          Navigator.of(context)
+                              .push(GameReviewScreen.buildRoute(options: widget.options)),
                     ),
                 ],
               ),

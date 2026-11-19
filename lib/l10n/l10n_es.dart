@@ -254,6 +254,66 @@ class AppLocalizationsEs extends AppLocalizations {
   String get mobileLocalDatabaseSize => 'Tamaño de base de datos local';
 
   @override
+  String get mobileReviewGame => 'Revisión de partida';
+
+  @override
+  String get mobileReviewStart => 'Revisar partida';
+
+  @override
+  String get mobileReviewAnalysing => 'Analizando la partida en el dispositivo';
+
+  @override
+  String get mobileReviewCancel => 'Cancelar';
+
+  @override
+  String get mobileReviewAccuracy => 'Precisión';
+
+  @override
+  String get mobileReviewAcpl => 'Pérdida media de centipeones';
+
+  @override
+  String get mobileReviewKeyMoments => 'Momentos clave';
+
+  @override
+  String get mobileReviewAllMoves => 'Todas las jugadas';
+
+  @override
+  String get mobileReviewStar => 'Jugada estrella';
+
+  @override
+  String get mobileReviewMissed => 'Ocasión perdida';
+
+  @override
+  String get mobileReviewBest => 'Mejor';
+
+  @override
+  String get mobileReviewExcellent => 'Excelente';
+
+  @override
+  String get mobileReviewGood => 'Buena';
+
+  @override
+  String get mobileReviewInaccuracy => 'Imprecisión';
+
+  @override
+  String get mobileReviewMistake => 'Error';
+
+  @override
+  String get mobileReviewBlunder => 'Error grave';
+
+  @override
+  String get mobileReviewEmpty => 'No hay jugadas que revisar.';
+
+  @override
+  String get mobileReviewFailed => 'No se pudo completar la revisión.';
+
+  @override
+  String get mobileReviewCancelled => 'Revisión cancelada.';
+
+  @override
+  String get mobileReviewNote => 'Estas etiquetas son heurísticas locales y no una verdad absoluta.';
+
+  @override
   String get mobileMoveOnRelease => 'Mover al soltar';
 
   @override

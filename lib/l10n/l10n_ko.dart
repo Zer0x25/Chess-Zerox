@@ -254,6 +254,66 @@ class AppLocalizationsKo extends AppLocalizations {
   String get mobileLocalDatabaseSize => '로컬 데이터베이스 크기';
 
   @override
+  String get mobileReviewGame => 'Review game';
+
+  @override
+  String get mobileReviewStart => 'Review game';
+
+  @override
+  String get mobileReviewAnalysing => 'Analysing the game locally';
+
+  @override
+  String get mobileReviewCancel => 'Cancel';
+
+  @override
+  String get mobileReviewAccuracy => 'Accuracy';
+
+  @override
+  String get mobileReviewAcpl => 'Average centipawn loss';
+
+  @override
+  String get mobileReviewKeyMoments => 'Key moments';
+
+  @override
+  String get mobileReviewAllMoves => 'All moves';
+
+  @override
+  String get mobileReviewStar => 'Star move';
+
+  @override
+  String get mobileReviewMissed => 'Missed chance';
+
+  @override
+  String get mobileReviewBest => 'Best';
+
+  @override
+  String get mobileReviewExcellent => 'Excellent';
+
+  @override
+  String get mobileReviewGood => 'Good';
+
+  @override
+  String get mobileReviewInaccuracy => 'Inaccuracy';
+
+  @override
+  String get mobileReviewMistake => 'Mistake';
+
+  @override
+  String get mobileReviewBlunder => 'Blunder';
+
+  @override
+  String get mobileReviewEmpty => 'No moves to review.';
+
+  @override
+  String get mobileReviewFailed => 'The review could not be completed.';
+
+  @override
+  String get mobileReviewCancelled => 'Review cancelled.';
+
+  @override
+  String get mobileReviewNote => 'These labels are local heuristics and are not an absolute truth.';
+
+  @override
   String get mobileMoveOnRelease => '손가락을 뗄 때 수 두기';
 
   @override

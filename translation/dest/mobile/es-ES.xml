@@ -55,6 +55,26 @@
   <string name="importPlayerNotFound" comment="Error shown when Chess.com has no player with the given username.">No se encontró al jugador en Chess.com.</string>
   <string name="importRateLimited" comment="Error shown when Chess.com rejects requests for being too frequent.">Chess.com está limitando las peticiones. Espera un minuto e inténtalo de nuevo.</string>
   <string name="deleteAllLogsConfirmation" comment="Title of the confirmation dialog asking whether to delete all stored logs.">¿Quieres eliminar todos los registros?</string>
+  <string name="reviewGame" comment="Title of the local game review report.">Revisión de partida</string>
+  <string name="reviewStart" comment="Analysis screen action that starts a local game review.">Revisar partida</string>
+  <string name="reviewAnalysing" comment="Shown while the local engine is reviewing the game.">Analizando la partida en el dispositivo</string>
+  <string name="reviewCancel" comment="Button that stops a running game review.">Cancelar</string>
+  <string name="reviewAccuracy" comment="Label of the accuracy figure in the review report.">Precisión</string>
+  <string name="reviewAcpl" comment="Label of the average centipawn loss in the review report.">Pérdida media de centipeones</string>
+  <string name="reviewKeyMoments" comment="Section of the review report with the most important moves.">Momentos clave</string>
+  <string name="reviewAllMoves" comment="Section of the review report listing every move.">Todas las jugadas</string>
+  <string name="reviewStar" comment="Our own label for a strong, decisive move.">Jugada estrella</string>
+  <string name="reviewMissed" comment="Our own label for a move that threw away a winning position.">Ocasión perdida</string>
+  <string name="reviewBest" comment="Move verdict in the review report.">Mejor</string>
+  <string name="reviewExcellent" comment="Move verdict in the review report.">Excelente</string>
+  <string name="reviewGood" comment="Move verdict in the review report.">Buena</string>
+  <string name="reviewInaccuracy" comment="Move verdict in the review report.">Imprecisión</string>
+  <string name="reviewMistake" comment="Move verdict in the review report.">Error</string>
+  <string name="reviewBlunder" comment="Move verdict in the review report.">Error grave</string>
+  <string name="reviewEmpty" comment="Shown when a game has no moves to review.">No hay jugadas que revisar.</string>
+  <string name="reviewFailed" comment="Shown when a local game review cannot be completed.">No se pudo completar la revisión.</string>
+  <string name="reviewCancelled" comment="Shown when the user stops a local game review.">Revisión cancelada.</string>
+  <string name="reviewNote" comment="Disclaimer shown below the review report.">Estas etiquetas son heurísticas locales y no una verdad absoluta.</string>
   <string name="dangerZone" comment="Header of the settings section containing account deletion.">Zona de riesgo</string>
   <string name="deleteYourAccount" comment="iOS-only settings entry that opens the account deletion page.">Eliminar tu cuenta</string>
   <string name="displayModeCompact" comment="Label of the game history display mode menu entry that switches to the compact game list.">Compacto</string>

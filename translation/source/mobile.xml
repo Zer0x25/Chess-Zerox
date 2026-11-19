@@ -77,6 +77,26 @@
   <string name="importPlayerNotFound" comment="Error shown when Chess.com has no player with the given username.">Player not found on Chess.com.</string>
   <string name="importRateLimited" comment="Error shown when Chess.com rejects requests for being too frequent.">Chess.com is rate limiting requests. Wait a minute and try again.</string>
   <string name="localDatabaseSize" comment="Settings screen entry showing the size of the local database.">Local database size</string>
+  <string name="reviewGame" comment="Title of the local game review report.">Review game</string>
+  <string name="reviewStart" comment="Analysis screen action that starts a local game review.">Review game</string>
+  <string name="reviewAnalysing" comment="Shown while the local engine is reviewing the game.">Analysing the game locally</string>
+  <string name="reviewCancel" comment="Button that stops a running game review.">Cancel</string>
+  <string name="reviewAccuracy" comment="Label of the accuracy figure in the review report.">Accuracy</string>
+  <string name="reviewAcpl" comment="Label of the average centipawn loss in the review report.">Average centipawn loss</string>
+  <string name="reviewKeyMoments" comment="Section of the review report with the most important moves.">Key moments</string>
+  <string name="reviewAllMoves" comment="Section of the review report listing every move.">All moves</string>
+  <string name="reviewStar" comment="Our own label for a strong, decisive move.">Star move</string>
+  <string name="reviewMissed" comment="Our own label for a move that threw away a winning position.">Missed chance</string>
+  <string name="reviewBest" comment="Move verdict in the review report.">Best</string>
+  <string name="reviewExcellent" comment="Move verdict in the review report.">Excellent</string>
+  <string name="reviewGood" comment="Move verdict in the review report.">Good</string>
+  <string name="reviewInaccuracy" comment="Move verdict in the review report.">Inaccuracy</string>
+  <string name="reviewMistake" comment="Move verdict in the review report.">Mistake</string>
+  <string name="reviewBlunder" comment="Move verdict in the review report.">Blunder</string>
+  <string name="reviewEmpty" comment="Shown when a game has no moves to review.">No moves to review.</string>
+  <string name="reviewFailed" comment="Shown when a local game review cannot be completed.">The review could not be completed.</string>
+  <string name="reviewCancelled" comment="Shown when the user stops a local game review.">Review cancelled.</string>
+  <string name="reviewNote" comment="Disclaimer shown below the review report.">These labels are local heuristics and are not an absolute truth.</string>
   <string name="moveOnRelease" comment="Board settings switch: make the move when the finger is lifted instead of on tap.">Move on release</string>
   <string name="moveOnReleaseSubtitle" comment="Explanation of the 'Move on release' board setting.">When moving a piece by tapping, the move is made when you lift your finger, letting you slide to change the destination square.</string>
   <string name="mustBeLoggedIn" comment="This is shown when the user tries to access a feature that requires login.">You must be logged in to view this page.</string>

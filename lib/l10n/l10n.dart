@@ -658,6 +658,126 @@ abstract class AppLocalizations {
   /// **'Local database size'**
   String get mobileLocalDatabaseSize;
 
+  /// No description provided for @mobileReviewGame.
+  ///
+  /// In en, this message translates to:
+  /// **'Review game'**
+  String get mobileReviewGame;
+
+  /// No description provided for @mobileReviewStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Review game'**
+  String get mobileReviewStart;
+
+  /// No description provided for @mobileReviewAnalysing.
+  ///
+  /// In en, this message translates to:
+  /// **'Analysing the game locally'**
+  String get mobileReviewAnalysing;
+
+  /// No description provided for @mobileReviewCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get mobileReviewCancel;
+
+  /// No description provided for @mobileReviewAccuracy.
+  ///
+  /// In en, this message translates to:
+  /// **'Accuracy'**
+  String get mobileReviewAccuracy;
+
+  /// No description provided for @mobileReviewAcpl.
+  ///
+  /// In en, this message translates to:
+  /// **'Average centipawn loss'**
+  String get mobileReviewAcpl;
+
+  /// No description provided for @mobileReviewKeyMoments.
+  ///
+  /// In en, this message translates to:
+  /// **'Key moments'**
+  String get mobileReviewKeyMoments;
+
+  /// No description provided for @mobileReviewAllMoves.
+  ///
+  /// In en, this message translates to:
+  /// **'All moves'**
+  String get mobileReviewAllMoves;
+
+  /// No description provided for @mobileReviewStar.
+  ///
+  /// In en, this message translates to:
+  /// **'Star move'**
+  String get mobileReviewStar;
+
+  /// No description provided for @mobileReviewMissed.
+  ///
+  /// In en, this message translates to:
+  /// **'Missed chance'**
+  String get mobileReviewMissed;
+
+  /// No description provided for @mobileReviewBest.
+  ///
+  /// In en, this message translates to:
+  /// **'Best'**
+  String get mobileReviewBest;
+
+  /// No description provided for @mobileReviewExcellent.
+  ///
+  /// In en, this message translates to:
+  /// **'Excellent'**
+  String get mobileReviewExcellent;
+
+  /// No description provided for @mobileReviewGood.
+  ///
+  /// In en, this message translates to:
+  /// **'Good'**
+  String get mobileReviewGood;
+
+  /// No description provided for @mobileReviewInaccuracy.
+  ///
+  /// In en, this message translates to:
+  /// **'Inaccuracy'**
+  String get mobileReviewInaccuracy;
+
+  /// No description provided for @mobileReviewMistake.
+  ///
+  /// In en, this message translates to:
+  /// **'Mistake'**
+  String get mobileReviewMistake;
+
+  /// No description provided for @mobileReviewBlunder.
+  ///
+  /// In en, this message translates to:
+  /// **'Blunder'**
+  String get mobileReviewBlunder;
+
+  /// No description provided for @mobileReviewEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No moves to review.'**
+  String get mobileReviewEmpty;
+
+  /// No description provided for @mobileReviewFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'The review could not be completed.'**
+  String get mobileReviewFailed;
+
+  /// No description provided for @mobileReviewCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Review cancelled.'**
+  String get mobileReviewCancelled;
+
+  /// No description provided for @mobileReviewNote.
+  ///
+  /// In en, this message translates to:
+  /// **'These labels are local heuristics and are not an absolute truth.'**
+  String get mobileReviewNote;
+
   /// No description provided for @mobileMoveOnRelease.
   ///
   /// In en, this message translates to:
