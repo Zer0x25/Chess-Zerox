@@ -182,7 +182,9 @@ class const _MoveTile({required final ReviewMove move, required final AnalysisOp
       ),
       onTap: () {
         Navigator.of(context).pop();
-        ref.read(analysisControllerProvider(options).notifier).jumpToNthNodeOnMainline(move.ply);
+        ref
+            .read(analysisControllerProvider(options).notifier)
+            .jumpToNthNodeOnMainline(move.ply - 1);
       },
     );
   }

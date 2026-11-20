@@ -107,7 +107,7 @@ class const ImportedGameStore(final Database db) {
   Future<List<ImportedGame>> listGames({
     ImportSource? source,
     String? username,
-    int limit = 30,
+    int? limit = 30,
   }) async {
     final (where, args) = _filter(source, username);
     final rows = await db.query(
@@ -155,6 +155,19 @@ class const ImportedGameStore(final Database db) {
   Future<void> clear({ImportSource? source, String? username}) async {
     final (where, args) = _filter(source, username);
     await db.transaction((txn) async {
+      final games = await txn.query(
+        'imported_games',
+        columns: ['source', 'external_id'],
+        where: where,
+        whereArgs: args,
+      );
+      for (final game in games) {
+        final safeId = '${game['source']}_${game['external_id']}'.replaceAll(
+          RegExp('[^a-zA-Z0-9_]'),
+          '_',
+        );
+        await txn.delete('local_game_review', where: 'game_key = ?', whereArgs: ['import_$safeId']);
+      }
       await txn.delete('imported_games', where: where, whereArgs: args);
       await txn.delete('import_sources', where: where, whereArgs: args);
     });

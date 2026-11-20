@@ -7,7 +7,6 @@ import 'package:lichess_mobile/src/model/game/game_storage.dart';
 import 'package:lichess_mobile/src/network/http.dart';
 import 'package:lichess_mobile/src/styles/lichess_icons.dart';
 import 'package:lichess_mobile/src/view/account/profile_screen.dart';
-import 'package:lichess_mobile/src/view/auth/email_login_screen.dart';
 import 'package:lichess_mobile/src/view/game/game_list_tile.dart';
 import 'package:lichess_mobile/src/view/home/games_carousel.dart';
 import 'package:lichess_mobile/src/view/home/home_tab_screen.dart';
@@ -543,17 +542,15 @@ void main() {
   });
 
   group('Sign in options', () {
-    testWidgets('opens the email login screen', (tester) async {
+    testWidgets('offers browser sign-in without the official email flow', (tester) async {
       final app = await makeTestProviderScope(tester, child: const Application());
       await tester.pumpWidget(app);
       await tester.pumpAndSettle();
 
       await tester.tap(find.text('Sign in'));
       await tester.pumpAndSettle();
-      await tester.tap(find.text('Sign in with an email'));
-      await tester.pumpAndSettle();
-
-      expect(find.byType(EmailLoginScreen), findsOneWidget);
+      expect(find.text('Sign in with the browser'), findsOneWidget);
+      expect(find.text('Sign in with an email'), findsNothing);
     });
   });
 
@@ -578,7 +575,7 @@ void main() {
       await tester.tap(find.text('Sign in with the browser'));
       await tester.pumpAndSettle();
 
-      expect(find.text('Something went wrong.'), findsOneWidget);
+      expect(find.textContaining('Something went wrong.'), findsOneWidget);
     });
 
     testWidgets('does not show a snackbar when the user cancels sign-in', (tester) async {

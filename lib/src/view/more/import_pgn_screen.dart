@@ -28,7 +28,7 @@ class const ImportPgnScreen({super.key}) extends StatelessWidget {
     return buildScreenRoute(screen: const ImportPgnScreen());
   }
 
-  static void handlePgnText(BuildContext context, String text, {StringId? id}) {
+  static Future<void> handlePgnText(BuildContext context, String text, {StringId? id}) async {
     try {
       final games = PgnGame.parseMultiGameLazy(text);
 
@@ -41,7 +41,7 @@ class const ImportPgnScreen({super.key}) extends StatelessWidget {
         final game = games.first;
         final rule = Rule.fromPgn(game.headers['Variant']);
 
-        Navigator.of(context).pushHidingTabBar(
+        await Navigator.of(context).pushHidingTabBar(
           AnalysisScreen.buildRoute(
             AnalysisOptions.pgn(
               id: id ?? const StringId('pgn_import_single_game'),
@@ -54,10 +54,10 @@ class const ImportPgnScreen({super.key}) extends StatelessWidget {
           ),
         );
       } else {
-        Navigator.of(context).pushHidingTabBar(PgnGamesListScreen.buildRoute(games.lock));
+        await Navigator.of(context).pushHidingTabBar(PgnGamesListScreen.buildRoute(games.lock));
       }
     } catch (_) {
-      showSnackBar(context, context.l10n.invalidPgn, type: .error);
+      if (context.mounted) showSnackBar(context, context.l10n.invalidPgn, type: .error);
     }
   }
 

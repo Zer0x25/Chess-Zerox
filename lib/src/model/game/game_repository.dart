@@ -78,7 +78,7 @@ class const GameRepository(
     assert(!filter.perfs.contains(Perf.puzzle));
     assert(!filter.perfs.contains(Perf.storm));
     assert(!filter.perfs.contains(Perf.streak));
-    return aggregator
+    return client
         .readNdJsonList(
           Uri(
             path: '/api/games/user/$userId',

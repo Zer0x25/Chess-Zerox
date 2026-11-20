@@ -2,6 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:lichess_mobile/src/db/database.dart';
 import 'package:lichess_mobile/src/model/import/imported_game.dart';
 import 'package:lichess_mobile/src/model/import/imported_game_store.dart';
+import 'package:lichess_mobile/src/view/import/username_import_screen.dart';
 import 'package:lichess_mobile/src/view/settings/import_data_screen.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
@@ -64,5 +65,45 @@ void main() {
 
     expect(find.text('No saved data'), findsOneWidget);
     expect(await store.listGames(), isEmpty);
+  });
+
+  testWidgets('opens all saved games for a username without fetching them', (tester) async {
+    final store = ImportedGameStore(db);
+    await store.insertGames(
+      source: ImportSource.chessCom,
+      username: 'hikaru',
+      games: [
+        for (var i = 0; i < 35; i++)
+          ImportedGame(
+            source: ImportSource.chessCom,
+            id: 'game$i',
+            white: 'Hikaru',
+            black: 'Rival $i',
+            result: '1-0',
+            playedAt: DateTime.utc(2026, 1, i + 1),
+            pgn: '*',
+          ),
+      ],
+    );
+    final app = await makeTestProviderScopeApp(
+      tester,
+      home: const ImportDataScreen(),
+      overrides: {databaseProvider: databaseProvider.overrideWith((ref) => db)},
+    );
+    await tester.pumpWidget(app);
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('hikaru'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Hikaru vs Rival 34'), findsOneWidget);
+    await tester.scrollUntilVisible(
+      find.text('Hikaru vs Rival 0'),
+      500,
+      scrollable: find.descendant(
+        of: find.descendant(of: find.byType(UsernameImportScreen), matching: find.byType(ListView)),
+        matching: find.byType(Scrollable),
+      ),
+    );
+    expect(find.text('Hikaru vs Rival 0'), findsOneWidget);
   });
 }

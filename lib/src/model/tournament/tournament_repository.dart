@@ -16,10 +16,10 @@ final tournamentRepositoryProvider = Provider<TournamentRepository>((Ref ref) {
 
 class TournamentRepository(final http.Client client, final Aggregator aggregator, final Ref _ref) {
   Future<IList<LightTournament>> featured() {
-    return aggregator.readJson(
+    return client.readJson(
       Uri(path: '/tournament/featured'),
       headers: {'Accept': 'application/json'},
-      atomicMapper: (Map<String, dynamic> json) => pick(json, 'featured').asTournamentListOrThrow(),
+      mapper: (Map<String, dynamic> json) => pick(json, 'featured').asTournamentListOrThrow(),
     );
   }
 

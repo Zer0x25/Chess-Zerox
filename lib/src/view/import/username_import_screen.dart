@@ -1,9 +1,11 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:lichess_mobile/src/db/database.dart';
 import 'package:lichess_mobile/src/model/common/id.dart';
 import 'package:lichess_mobile/src/model/import/chesscom_client.dart';
 import 'package:lichess_mobile/src/model/import/import_providers.dart';
 import 'package:lichess_mobile/src/model/import/imported_game.dart';
 import 'package:lichess_mobile/src/model/import/imported_game_store.dart';
+import 'package:lichess_mobile/src/model/review/game_review_storage.dart';
 import 'package:lichess_mobile/src/styles/styles.dart';
 import 'package:lichess_mobile/src/utils/l10n_context.dart';
 import 'package:lichess_mobile/src/utils/navigation.dart';
@@ -13,10 +15,15 @@ import 'package:lichess_mobile/src/widgets/platform.dart';
 import 'package:material_ui/material_ui.dart';
 
 /// Lists the recent public games of a player and opens one in the analysis board.
-class const UsernameImportScreen({required final ImportSource source, super.key})
-    extends ConsumerStatefulWidget {
-  static Route<dynamic> buildRoute({required ImportSource source}) {
-    return buildScreenRoute(screen: UsernameImportScreen(source: source));
+class const UsernameImportScreen({
+  required final ImportSource source,
+  final String? initialUsername,
+  super.key,
+}) extends ConsumerStatefulWidget {
+  static Route<dynamic> buildRoute({required ImportSource source, String? initialUsername}) {
+    return buildScreenRoute(
+      screen: UsernameImportScreen(source: source, initialUsername: initialUsername),
+    );
   }
 
   @override
@@ -32,6 +39,39 @@ class _UsernameImportScreenState() extends ConsumerState<UsernameImportScreen> {
   String? _username;
   int _limit = 30;
   bool _searching = false;
+  Set<String> _reviewedKeys = {};
+
+  String _gameKey(ImportedGame game) {
+    final safeId = '${game.source.name}_${game.id}'.replaceAll(RegExp('[^a-zA-Z0-9_]'), '_');
+    return 'import_$safeId';
+  }
+
+  Future<void> _refreshReviews(List<ImportedGame> games) async {
+    final db = await ref.read(databaseProvider.future);
+    final keys = await GameReviewStorage(db).matchingKeys({
+      for (final game in games)
+        if (game.pgn case final String pgn when pgn.isNotEmpty) _gameKey(game): pgn,
+    });
+    if (mounted) setState(() => _reviewedKeys = keys);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    final username = widget.initialUsername;
+    if (username != null) {
+      _controller.text = username;
+      _username = username;
+      _future = _loadSaved(username);
+    }
+  }
+
+  Future<List<ImportedGame>> _loadSaved(String username) async {
+    final store = await ref.read(importedGameStoreProvider.future);
+    final games = await store.listGames(source: widget.source, username: username, limit: null);
+    await _refreshReviews(games);
+    return games;
+  }
 
   @override
   void dispose() {
@@ -68,7 +108,8 @@ class _UsernameImportScreenState() extends ConsumerState<UsernameImportScreen> {
         games: newer,
       );
       ref.invalidate(importedSourcesProvider);
-      final saved = await store.listGames(source: widget.source, username: username, limit: _limit);
+      final saved = await store.listGames(source: widget.source, username: username, limit: null);
+      await _refreshReviews(saved);
       if (!mounted) return;
       setState(() {
         _username = username;
@@ -103,8 +144,11 @@ class _UsernameImportScreenState() extends ConsumerState<UsernameImportScreen> {
       final pgn = game.pgn ?? await ref.read(importRepositoryProvider).fetchLichessPgn(game.id);
       if (!mounted) return;
 
-      final safeId = '${game.source.name}_${game.id}'.replaceAll(RegExp('[^a-zA-Z0-9_]'), '_');
-      ImportPgnScreen.handlePgnText(context, pgn, id: StringId('import_$safeId'));
+      await ImportPgnScreen.handlePgnText(context, pgn, id: StringId(_gameKey(game)));
+      final username = _username;
+      if (mounted && username != null) {
+        setState(() => _future = _loadSaved(username));
+      }
     } catch (error) {
       if (mounted) {
         showSnackBar(context, context.l10n.mobileImportOpenError('$error'), type: .error);
@@ -274,7 +318,14 @@ class _UsernameImportScreenState() extends ConsumerState<UsernameImportScreen> {
             return ListTile(
               leading: CircleAvatar(child: Text(game.source == .lichess ? 'L' : 'C')),
               title: Text(game.playersLabel, maxLines: 1, overflow: .ellipsis),
-              subtitle: Text(subtitle, maxLines: 2, overflow: .ellipsis),
+              subtitle: Text(
+                _reviewedKeys.contains(_gameKey(game))
+                    ? '$subtitle\n✓ Revisión local guardada'
+                    : subtitle,
+                maxLines: 3,
+                overflow: .ellipsis,
+              ),
+              isThreeLine: _reviewedKeys.contains(_gameKey(game)),
               trailing: _openingGameId == game.id
                   ? const SizedBox(
                       width: 20,

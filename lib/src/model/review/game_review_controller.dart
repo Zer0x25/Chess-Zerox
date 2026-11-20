@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:dartchess/dartchess.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:lichess_mobile/src/db/database.dart';
 import 'package:lichess_mobile/src/model/analysis/analysis_controller.dart';
 import 'package:lichess_mobile/src/model/common/eval.dart';
 import 'package:lichess_mobile/src/model/common/id.dart';
@@ -14,6 +15,7 @@ import 'package:lichess_mobile/src/model/engine/evaluation_preferences.dart';
 import 'package:lichess_mobile/src/model/engine/position_evaluator.dart';
 import 'package:lichess_mobile/src/model/engine/work.dart';
 import 'package:lichess_mobile/src/model/review/game_review.dart';
+import 'package:lichess_mobile/src/model/review/game_review_storage.dart';
 import 'package:logging/logging.dart';
 
 final _logger = Logger('GameReview');
@@ -35,6 +37,30 @@ final gameReviewControllerProvider = AsyncNotifierProvider.autoDispose
       name: 'GameReviewControllerProvider',
     );
 
+/// Holds the latest report while its analysis screen remains open.
+final currentGameReviewProvider = AsyncNotifierProvider.autoDispose
+    .family<CurrentGameReview, GameReview?, AnalysisOptions>(CurrentGameReview.new);
+
+class CurrentGameReview(final AnalysisOptions options) extends AsyncNotifier<GameReview?> {
+  @override
+  Future<GameReview?> build() async {
+    if (options case final Pgn pgn when pgn.id.value.startsWith('import_')) {
+      final analysis = await ref.read(analysisControllerProvider(options).future);
+      final db = await ref.watch(databaseProvider.future);
+      return await GameReviewStorage(db).load(pgn, analysis.root.mainline.toList(growable: false));
+    }
+    return null;
+  }
+
+  Future<void> save(GameReview review) async {
+    state = AsyncData(review);
+    if (options case final Pgn pgn when pgn.id.value.startsWith('import_')) {
+      final db = await ref.read(databaseProvider.future);
+      await GameReviewStorage(db).save(pgn, review);
+    }
+  }
+}
+
 /// Runs a local Stockfish review of the game currently open in the analysis board.
 class GameReviewController(final AnalysisOptions options) extends AsyncNotifier<GameReviewState> {
   StreamSubscription<EvalResult>? _subscription;
@@ -52,6 +78,17 @@ class GameReviewController(final AnalysisOptions options) extends AsyncNotifier<
 
     final analysisState = ref.read(analysisControllerProvider(options)).requireValue;
     final mainline = analysisState.root.mainline.toList(growable: false);
+    final saved = await ref.read(currentGameReviewProvider(options).future);
+    if (!ref.mounted) return const GameReviewState(status: .cancelled);
+    if (saved != null) {
+      return GameReviewState(
+        status: .done,
+        progress: 1,
+        evaluated: saved.moves.length,
+        total: mainline.length,
+        review: saved,
+      );
+    }
 
     if (mainline.isEmpty) {
       return GameReviewState(
@@ -134,13 +171,16 @@ class GameReviewController(final AnalysisOptions options) extends AsyncNotifier<
       }
 
       if (!ref.mounted) return;
+      final review = buildGameReview(moves: moves.toIList());
+      await ref.read(currentGameReviewProvider(options).notifier).save(review);
+      if (!ref.mounted) return;
       state = AsyncData(
         GameReviewState(
           status: .done,
           progress: 1,
           evaluated: moves.length,
           total: mainline.length,
-          review: buildGameReview(moves: moves.toIList()),
+          review: review,
         ),
       );
     } catch (error) {

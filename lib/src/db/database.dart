@@ -63,7 +63,7 @@ Future<Database> openAppDatabase(DatabaseFactory dbFactory, String path) {
   return dbFactory.openDatabase(
     path,
     options: OpenDatabaseOptions(
-      version: 10,
+      version: 11,
       onConfigure: (db) async {
         final version = await _getDatabaseVersion(db);
         _logger.info('SQLite version: $version');
@@ -97,6 +97,7 @@ Future<Database> openAppDatabase(DatabaseFactory dbFactory, String path) {
         _createLearnProgressTableV7(batch);
         _createPracticeProgressTableV8(batch);
         _createImportTablesV10(batch);
+        _createGameReviewTableV11(batch);
         await batch.commit();
       },
       onUpgrade: (db, oldVersion, newVersion) async {
@@ -127,11 +128,24 @@ Future<Database> openAppDatabase(DatabaseFactory dbFactory, String path) {
         if (oldVersion < 10) {
           _createImportTablesV10(batch);
         }
+        if (oldVersion < 11) {
+          _createGameReviewTableV11(batch);
+        }
         await batch.commit();
       },
       onDowngrade: onDatabaseDowngradeDelete,
     ),
   );
+}
+
+void _createGameReviewTableV11(Batch batch) {
+  batch.execute('''
+    CREATE TABLE local_game_review(
+      game_key TEXT PRIMARY KEY,
+      pgn_hash TEXT NOT NULL,
+      data TEXT NOT NULL
+    )
+  ''');
 }
 
 void _createPuzzleBatchTableV3(Batch batch) {

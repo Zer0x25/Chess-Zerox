@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/testing.dart';
 import 'package:lichess_mobile/src/model/auth/auth_repository.dart';
-import 'package:lichess_mobile/src/model/auth/bearer.dart';
 import 'package:lichess_mobile/src/network/http.dart';
 
 import '../../network/fake_http_client_factory.dart';
@@ -80,17 +79,23 @@ void main() {
 
     test('requests the custom-scheme redirect URI', () async {
       String? redirectUrl;
+      String? clientId;
+      List<String>? scopes;
       final container = await appAuthContainer(
         accountClient(),
         FakeFlutterAppAuth((request) async {
           redirectUrl = request.redirectUrl;
+          clientId = request.clientId;
+          scopes = request.scopes;
           return tokenResponse();
         }),
       );
       await container.read(authRepositoryProvider).signIn();
 
       expect(redirectUrl, kOAuthRedirectUri);
-      expect(redirectUrl, startsWith('org.lichess.mobile://'));
+      expect(redirectUrl, 'org.chesszerox.app://login-callback');
+      expect(clientId, 'chess-zerox');
+      expect(scopes, ['preference:read', 'study:read', 'puzzle:read', 'puzzle:write']);
     });
 
     test('throws SignInCancelledException when the user cancels the auth session', () async {
@@ -224,7 +229,7 @@ void main() {
           .read(authRepositoryProvider)
           .signInWithEmailCode(username: 'johndoe', email: 'johndoe@lichess.org', code: 'xxxxxx');
 
-      expect(authorization, 'Bearer ${signBearerToken('lio_token')}');
+      expect(authorization, 'Bearer lio_token');
     });
 
     test('throws InvalidEmailLoginCodeException on 404', () async {

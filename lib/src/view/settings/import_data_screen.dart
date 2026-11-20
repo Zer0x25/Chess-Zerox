@@ -3,6 +3,7 @@ import 'package:lichess_mobile/src/model/import/imported_game_store.dart';
 import 'package:lichess_mobile/src/styles/styles.dart';
 import 'package:lichess_mobile/src/utils/l10n_context.dart';
 import 'package:lichess_mobile/src/utils/navigation.dart';
+import 'package:lichess_mobile/src/view/import/username_import_screen.dart';
 import 'package:lichess_mobile/src/widgets/feedback.dart';
 import 'package:lichess_mobile/src/widgets/list.dart';
 import 'package:lichess_mobile/src/widgets/platform.dart';
@@ -90,6 +91,12 @@ class const _Body({
                 subtitle: Text(
                   '${entry.source.source.label} • '
                   '${context.l10n.mobileImportGamesCount('${entry.gameCount}')}',
+                ),
+                onTap: () => Navigator.of(context).push(
+                  UsernameImportScreen.buildRoute(
+                    source: entry.source.source,
+                    initialUsername: entry.source.username,
+                  ),
                 ),
                 trailing: IconButton(
                   icon: const Icon(Icons.delete_outline),

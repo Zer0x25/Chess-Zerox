@@ -7,16 +7,22 @@ import 'package:cupertino_ui/cupertino_ui.dart';
 import 'package:dartchess/dartchess.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/testing.dart';
+import 'package:lichess_mobile/src/db/database.dart';
 import 'package:lichess_mobile/src/model/analysis/analysis_controller.dart';
 import 'package:lichess_mobile/src/model/analysis/analysis_preferences.dart';
 import 'package:lichess_mobile/src/model/common/chess.dart';
 import 'package:lichess_mobile/src/model/common/id.dart';
+import 'package:lichess_mobile/src/model/common/node.dart';
+import 'package:lichess_mobile/src/model/common/uci.dart';
 import 'package:lichess_mobile/src/model/engine/evaluation_mixin.dart';
 import 'package:lichess_mobile/src/model/engine/evaluation_preferences.dart';
 import 'package:lichess_mobile/src/model/engine/position_evaluator.dart';
 import 'package:lichess_mobile/src/model/game/game.dart';
+import 'package:lichess_mobile/src/model/review/game_review.dart';
+import 'package:lichess_mobile/src/model/review/game_review_storage.dart';
 import 'package:lichess_mobile/src/model/settings/board_preferences.dart';
 import 'package:lichess_mobile/src/model/settings/preferences_storage.dart';
 import 'package:lichess_mobile/src/network/http.dart';
@@ -34,6 +40,7 @@ import 'package:lichess_mobile/src/widgets/pgn.dart';
 import 'package:lichess_mobile/src/widgets/pockets.dart';
 import 'package:lichess_mobile/src/widgets/variations_bar.dart';
 import 'package:material_ui/material_ui.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 import '../../model/engine/fake_engine.dart';
 import '../../network/fake_websocket_channel.dart';
@@ -50,6 +57,71 @@ void main() {
   });
 
   group('Analysis Screen', () {
+    testWidgets('review mode shows saved move feedback and can be disabled', (tester) async {
+      final db = await openAppDatabase(databaseFactoryFfiNoIsolate, inMemoryDatabasePath);
+      addTearDown(db.close);
+      const options = AnalysisOptions.pgn(
+        id: StringId('import_test_game'),
+        orientation: Side.white,
+        initialMoveCursor: 1,
+        pgn: '1. e4 e5',
+        isComputerAnalysisAllowed: true,
+        variant: Variant.standard,
+      ) as Pgn;
+      final branch = Root.fromPgnMoves('e4 e5').view.mainline.first;
+      await GameReviewStorage(db).save(
+        options,
+        buildGameReview(
+          moves: IList([
+            ReviewMove(
+              ply: 1,
+              side: Side.white,
+              sanMove: branch.sanMove,
+              path: UciPath.fromId(branch.id),
+              winPercentBefore: 50,
+              winPercentAfter: 45,
+              cpAfter: 25,
+              centipawnLoss: 20,
+              accuracy: 90,
+              verdict: .mistake,
+              bestMoveUci: 'd2d4',
+            ),
+          ]),
+        ),
+      );
+      final app = await makeTestProviderScopeApp(
+        tester,
+        home: const AnalysisScreen(options: options),
+        overrides: {databaseProvider: databaseProvider.overrideWith((ref) => db)},
+      );
+      await tester.pumpWidget(app);
+      await tester.pumpAndSettle();
+      expect(find.textContaining('e4 · Mistake'), findsNothing);
+      await tester.tap(find.byIcon(Icons.more_horiz));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Modo revisión Zerox'));
+      await tester.pumpAndSettle();
+      expect(find.textContaining('e4 · Mistake'), findsOneWidget);
+      expect(find.text('Revisión local · jugada anterior'), findsOneWidget);
+      expect(find.textContaining('Alternativa: d4'), findsOneWidget);
+      expect(find.text('+0.25'), findsOneWidget);
+      expect(find.text('?', findRichText: true), findsWidgets);
+      final container = ProviderScope.containerOf(tester.element(find.byType(AnalysisScreen)));
+      container.read(analysisControllerProvider(options).notifier).userNext();
+      await tester.pumpAndSettle();
+      expect(find.textContaining('e4 · Mistake'), findsNothing);
+      expect(find.text('Sin valoración para esta posición'), findsOneWidget);
+      container.read(analysisControllerProvider(options).notifier).userPrevious();
+      await tester.pumpAndSettle();
+      expect(find.textContaining('e4 · Mistake'), findsOneWidget);
+      await tester.tap(find.byIcon(Icons.more_horiz));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Modo Lichess'));
+      await tester.pumpAndSettle();
+      expect(find.textContaining('e4 · Mistake'), findsNothing);
+      expect(find.text('Revisión local · jugada anterior'), findsNothing);
+    });
+
     testWidgets('displays correct move and position', (tester) async {
       final app = await makeTestProviderScopeApp(
         tester,

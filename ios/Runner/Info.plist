@@ -110,6 +110,7 @@
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>org.lichess.mobile</string>
+				<string>org.chesszerox.app</string>
 			</array>
 		</dict>
 	</array>

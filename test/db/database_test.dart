@@ -61,7 +61,7 @@ void main() {
       final db = await openAppDatabase(databaseFactoryFfi, path);
       addTearDown(db.close);
 
-      expect(await db.getVersion(), 10);
+      expect(await db.getVersion(), 11);
       expect(await db.query('learn_progress'), hasLength(1));
       await db.insert('practice_progress', {
         'chapterId': 'dW7KIuoY',
@@ -106,7 +106,7 @@ void main() {
         final db = await openAppDatabase(databaseFactoryFfi, path);
         addTearDown(db.close);
 
-        expect(await db.getVersion(), 10);
+        expect(await db.getVersion(), 11);
         final rows = await db.query('http_log');
         expect(rows, hasLength(1));
         expect(rows.single, containsPair('cache', null));

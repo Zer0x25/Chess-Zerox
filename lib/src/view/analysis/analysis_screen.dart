@@ -8,6 +8,7 @@ import 'package:lichess_mobile/src/model/common/chess.dart';
 import 'package:lichess_mobile/src/model/engine/evaluation_preferences.dart';
 import 'package:lichess_mobile/src/model/game/exported_game.dart';
 import 'package:lichess_mobile/src/model/game/player.dart';
+import 'package:lichess_mobile/src/model/review/game_review_controller.dart';
 import 'package:lichess_mobile/src/tab_navigation.dart';
 import 'package:lichess_mobile/src/utils/focus_detector.dart';
 import 'package:lichess_mobile/src/utils/immersive_mode.dart';
@@ -80,6 +81,8 @@ class const _AnalysisScreen({required final AnalysisOptions options})
 }
 
 class _AnalysisScreenState() extends ConsumerState<_AnalysisScreen> {
+  bool _reviewMode = false;
+
   @override
   Widget build(BuildContext context) {
     final ctrlProvider = analysisControllerProvider(widget.options);
@@ -171,6 +174,12 @@ class _AnalysisScreenState() extends ConsumerState<_AnalysisScreen> {
                           Navigator.of(context)
                               .push(GameReviewScreen.buildRoute(options: widget.options)),
                     ),
+                  if (value.isComputerAnalysisAllowed)
+                    ContextMenuAction(
+                      icon: _reviewMode ? Icons.layers_clear_outlined : Icons.layers_outlined,
+                      label: _reviewMode ? 'Modo Lichess' : 'Modo revisión Zerox',
+                      onPressed: () => setState(() => _reviewMode = !_reviewMode),
+                    ),
                 ],
               ),
           ],
@@ -178,6 +187,7 @@ class _AnalysisScreenState() extends ConsumerState<_AnalysisScreen> {
         body: switch (asyncState) {
           AsyncData(:final value) => _TabbedBody(
             options: widget.options,
+            reviewMode: _reviewMode,
             // Move times can only be shown for games played with a clock.
             showMoveTimes: value.hasChartClocks,
           ),
@@ -229,8 +239,11 @@ class _AnalysisScreenState() extends ConsumerState<_AnalysisScreen> {
 ///
 /// Which tabs are available depends on the loaded game, so the list can only be built once the
 /// analysis state is available.
-class const _TabbedBody({required final AnalysisOptions options, required final bool showMoveTimes})
-    extends StatefulWidget {
+class const _TabbedBody({
+  required final AnalysisOptions options,
+  required final bool showMoveTimes,
+  required final bool reviewMode,
+}) extends StatefulWidget {
   @override
   State<_TabbedBody> createState() => _TabbedBodyState();
 }
@@ -272,6 +285,7 @@ class _TabbedBodyState() extends State<_TabbedBody> with SingleTickerProviderSta
     final smallBoard = _smallBoard ?? isSmallBoardByDefault(context);
     return _Body(
       options: widget.options,
+      reviewMode: widget.reviewMode,
       controller: _tabController,
       tabs: tabs,
       smallBoard: smallBoard,
@@ -282,6 +296,7 @@ class _TabbedBodyState() extends State<_TabbedBody> with SingleTickerProviderSta
 
 class const _Body({
   required final AnalysisOptions options,
+  required final bool reviewMode,
   required final TabController controller,
   required final List<AnalysisTab> tabs,
   required final bool smallBoard,
@@ -300,6 +315,14 @@ class const _Body({
     final isEngineAvailable = analysisState.isEngineAvailable(enginePrefs);
     final currentNode = analysisState.currentNode;
     final pov = analysisState.pov;
+    final reviewState = reviewMode ? ref.watch(currentGameReviewProvider(options)) : null;
+    final review = reviewState?.value;
+    final currentReviewMoves = review?.moves.where(
+      (move) => move.path == analysisState.currentPath,
+    );
+    final currentReviewMove = currentReviewMoves == null || currentReviewMoves.isEmpty
+        ? null
+        : currentReviewMoves.first;
 
     Widget? boardFooter;
     Widget? boardHeader;
@@ -353,6 +376,40 @@ class const _Body({
           : (playerWidgets.black, playerWidgets.white);
     }
 
+    final label = switch (currentReviewMove?.verdict) {
+      .star => context.l10n.mobileReviewStar,
+      .missedChance => context.l10n.mobileReviewMissed,
+      .best => context.l10n.mobileReviewBest,
+      .excellent => context.l10n.mobileReviewExcellent,
+      .good => context.l10n.mobileReviewGood,
+      .inaccuracy => context.l10n.mobileReviewInaccuracy,
+      .mistake => context.l10n.mobileReviewMistake,
+      .blunder => context.l10n.mobileReviewBlunder,
+      null => null,
+    };
+    final (reviewSymbol, reviewColor) = switch (currentReviewMove?.verdict) {
+      .star => ('★', Colors.teal),
+      .best => ('★', Colors.green),
+      .excellent => ('+', Colors.lightGreen),
+      .good => ('✓', Colors.green),
+      .inaccuracy => ('?!', Colors.amber),
+      .mistake => ('?', Colors.deepOrange),
+      .blunder => ('??', Colors.red),
+      .missedChance => ('!', Colors.orange),
+      null => ('', Colors.transparent),
+    };
+    final bestUci = currentReviewMove?.bestMoveUci;
+    final bestMove = bestUci != null && bestUci.length >= 4 ? Move.parse(bestUci) : null;
+    final previousPosition = currentReviewMove == null || currentReviewMove.ply == 1
+        ? analysisState.root.position
+        : analysisState.root.mainline.elementAt(currentReviewMove.ply - 2).position;
+    final bestSan =
+        bestMove != null &&
+            bestMove != currentReviewMove?.sanMove.move &&
+            previousPosition.isLegal(bestMove)
+        ? previousPosition.makeSan(bestMove).$2
+        : null;
+
     return FocusDetector(
       onFocusRegained: () {
         if (context.mounted) {
@@ -364,8 +421,54 @@ class const _Body({
         tabController: controller,
         pov: pov,
         sideToMove: analysisState.currentPosition.turn,
-        boardBuilder: (context, boardSize, borderRadius) =>
-            GameAnalysisBoard(options: options, boardSize: boardSize, boardRadius: borderRadius),
+        boardBuilder: (context, boardSize, borderRadius) {
+          final lastMove = currentReviewMove?.sanMove.move;
+          final square = switch (lastMove) {
+            NormalMove(:final to) || DropMove(:final to) => to,
+            null => null,
+          };
+          final squareSize = boardSize / 8;
+          return SizedBox(
+            width: boardSize,
+            height: boardSize,
+            child: Stack(
+              clipBehavior: .hardEdge,
+              children: [
+                GameAnalysisBoard(
+                  options: options,
+                  boardSize: boardSize,
+                  boardRadius: borderRadius,
+                ),
+                if (square != null)
+                  Positioned(
+                    left: ((pov == Side.white ? square.file : 7 - square.file) + 0.63) * squareSize,
+                    top: ((pov == Side.white ? 7 - square.rank : square.rank) + 0.02) * squareSize,
+                    child: IgnorePointer(
+                      child: Semantics(
+                        label: label,
+                        child: Container(
+                          width: squareSize * 0.34,
+                          height: squareSize * 0.34,
+                          alignment: .center,
+                          decoration: BoxDecoration(color: reviewColor, shape: .circle),
+                          child: FittedBox(
+                            child: Text(
+                              reviewSymbol,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: .bold,
+                                fontSize: 16,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+              ],
+            ),
+          );
+        },
         smallBoard: smallBoard,
         boardHeader: boardHeader,
         boardFooter: boardFooter,
@@ -374,14 +477,70 @@ class const _Body({
                 return EngineGauge(params: analysisState.engineGaugeParams(enginePrefs));
               }
             : null,
-        engineLines: isEngineAvailable && numEvalLines > 0 && analysisPrefs.showEngineLines
-            ? EngineLines(
-                filters: (
-                  context: analysisState.evaluationContext,
-                  path: analysisState.currentPath,
-                ),
-                onTapMove: ref.read(ctrlProvider.notifier).onUserMove,
-                analysisState: analysisState,
+        engineLines:
+            reviewMode || (isEngineAvailable && numEvalLines > 0 && analysisPrefs.showEngineLines)
+            ? Column(
+                mainAxisSize: .min,
+                children: [
+                  if (reviewMode)
+                    Material(
+                      color: Theme.of(context).colorScheme.secondaryContainer,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                        child: Column(
+                          crossAxisAlignment: .start,
+                          children: [
+                            Text(
+                              'Revisión local · jugada anterior',
+                              style: Theme.of(context).textTheme.labelSmall,
+                            ),
+                            if (currentReviewMove != null)
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      '${currentReviewMove.sanMove.san} · $label'
+                                      '${bestSan != null ? ' · Alternativa: $bestSan' : ''}',
+                                      maxLines: 2,
+                                      overflow: .ellipsis,
+                                    ),
+                                  ),
+                                  if (currentReviewMove.cpAfter case final cp?)
+                                    Text('${cp >= 0 ? '+' : ''}${(cp / 100).toStringAsFixed(2)}'),
+                                ],
+                              )
+                            else if (reviewState is AsyncLoading)
+                              const Text('Cargando revisión…')
+                            else if (reviewState is AsyncError)
+                              const Text('No se pudo cargar la revisión local')
+                            else if (review == null)
+                              Row(
+                                children: [
+                                  const Expanded(child: Text('Esta partida aún no tiene revisión')),
+                                  TextButton(
+                                    onPressed: () =>
+                                        Navigator.of(context)
+                                            .push(GameReviewScreen.buildRoute(options: options)),
+                                    child: Text(context.l10n.mobileReviewGame),
+                                  ),
+                                ],
+                              )
+                            else
+                              const Text('Sin valoración para esta posición'),
+                          ],
+                        ),
+                      ),
+                    ),
+                  if (isEngineAvailable && numEvalLines > 0 && analysisPrefs.showEngineLines)
+                    EngineLines(
+                      filters: (
+                        context: analysisState.evaluationContext,
+                        path: analysisState.currentPath,
+                      ),
+                      onTapMove: ref.read(ctrlProvider.notifier).onUserMove,
+                      analysisState: analysisState,
+                    ),
+                ],
               )
             : null,
         bottomBar: _BottomBar(
