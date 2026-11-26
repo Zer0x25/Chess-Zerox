@@ -39,7 +39,7 @@ dependencies:
   flutter_appauth: ^13.0.0
   flutter_displaymode: ^0.7.0
   flutter_layout_grid: ^2.0.8
-  flutter_local_notifications: ^23.0.3
+  flutter_local_notifications: ^23.0.4
   flutter_localizations:
     sdk: flutter
   flutter_markdown_plus: 
